@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.metallikman.rebuc.BibliotecarioActivity">
+    tools:context="com.example.metallikman.rebuc.UniversitarioActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,26 +19,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/button"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="logout"
-            android:text="Cerrar Sesion" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/txtBusquedaTickets"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Busqueda de Tickets por Asunto"
-            android:inputType="textPersonName"
-            android:selectAllOnFocus="false"
-            android:singleLine="false" />
+            <Button
+                android:id="@+id/cmdAgregarReporte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="iniciarLevantarTicket"
+                android:text="Generar Ticket" />
+
+            <Button
+                android:id="@+id/cmdLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="logout"
+                android:text="Cerrar sesion"
+                tools:layout_editor_absoluteX="148dp"
+                tools:layout_editor_absoluteY="447dp" />
+
+        </LinearLayout>
 
         <ListView
-            android:id="@+id/lstReportesBiblio"
+            android:id="@+id/lstReportes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -24,8 +24,11 @@
         <activity android:name=".Registro" />
         <activity android:name=".Login" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".UniversitarioActivity" />
+        <activity android:name=".LevantarTicketActivity" />
+        <activity android:name=".DetallesReportesUniversitario" />
         <activity android:name=".BibliotecarioActivity" />
-        <activity android:name=".LevantarTicketActivity"></activity>
+        <activity android:name=".DetallesReportesBibliotecario"></activity>
     </application>
 
 </manifest>

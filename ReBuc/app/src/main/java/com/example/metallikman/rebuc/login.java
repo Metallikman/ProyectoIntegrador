@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,9 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
@@ -59,21 +55,21 @@ public class Login extends AppCompatActivity {
                         if(rec.has("us_rol")){
                             int rol = rec.getInt("us_rol");
                             if(rol==1){
-                                /*intent = new Intent(Login.this, BibliotecarioActivity.class);
+                                /*intent = new Intent(Login.this, UniversitarioActivity.class);
                                 user.setEmail(rec.getString("us_correo"));
                                 user.setRol(rec.getString("us_rol"));
                                 user.setIdUser(rec.getString("us_id"));
                                 startActivity(intent);
                                 finish();*/
                             }else if(rol==2){
-                                 /*intent = new Intent(Login.this, BibliotecarioActivity.class);
+                                 intent = new Intent(Login.this, BibliotecarioActivity.class);
                                 user.setEmail(rec.getString("us_correo"));
                                 user.setRol(rec.getString("us_rol"));
                                 user.setIdUser(rec.getString("us_id"));
                                 startActivity(intent);
-                                finish();*/
+                                finish();
                             }else if(rol==3) {
-                                intent = new Intent(Login.this, BibliotecarioActivity.class);
+                                intent = new Intent(Login.this, UniversitarioActivity.class);
                                 user.setEmail(rec.getString("us_correo"));
                                 user.setRol(rec.getString("us_rol"));
                                 user.setIdUser(rec.getString("us_id"));

@@ -24,24 +24,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BibliotecarioActivity extends AppCompatActivity {
+public class UniversitarioActivity extends AppCompatActivity {
     private ArrayList tickets = new ArrayList<Tickets>();
     private ListView lstReportes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bibliotecario);
-        lstReportes=(ListView)findViewById(R.id.lstReportesBiblio);
+        setContentView(R.layout.activity_universitario);
         getReportes();
-
+        lstReportes=(ListView)findViewById(R.id.lstReportes);
         lstReportes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Tickets ticketAMostrar = (Tickets) parent.getItemAtPosition(position);
 
-                Intent intent = new Intent(getBaseContext(), DetallesReportesBibliotecario.class);
+                Intent intent = new Intent(getBaseContext(), DetallesReportesUniversitario.class);
                 intent.putExtra("asunto", ticketAMostrar.getSolicitud());
                 intent.putExtra("fechaAlta", ticketAMostrar.getFechaAlta());
                 intent.putExtra("fechaCierre", ticketAMostrar.getFechaCierre());
@@ -50,15 +49,22 @@ public class BibliotecarioActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     public void logout(View v){
-        new User(BibliotecarioActivity.this).remove();
-        Intent intent = new Intent(BibliotecarioActivity.this, Login.class);
+        new User(UniversitarioActivity.this).remove();
+        Intent intent = new Intent(UniversitarioActivity.this, Login.class);
         startActivity(intent);
         finish();
 
     }
+
+    public void iniciarLevantarTicket(View v){
+        Intent intent = new Intent(UniversitarioActivity.this, LevantarTicketActivity.class);
+        startActivity(intent);
+    }
+
     private void getReportes(){
         String URL_POST="http://dogebox.ddns.net/pi/api/getTickets.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
@@ -97,7 +103,7 @@ public class BibliotecarioActivity extends AppCompatActivity {
                         }
                     }
 
-                    ReportesAdapter reportesAdapter = new ReportesAdapter(BibliotecarioActivity.this, tickets);
+                    ReportesAdapter reportesAdapter = new ReportesAdapter(UniversitarioActivity.this, tickets);
                     lstReportes.setAdapter(reportesAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -111,8 +117,9 @@ public class BibliotecarioActivity extends AppCompatActivity {
         }){
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
-
+                User user= new User(UniversitarioActivity.this);
                 Map<String,String > params=new HashMap<String,String>();
+                params.put("idUsuario",user.getIdUser());
                 return params;
             }
         };

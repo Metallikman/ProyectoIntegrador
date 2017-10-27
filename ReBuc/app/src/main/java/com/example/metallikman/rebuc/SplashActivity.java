@@ -25,9 +25,12 @@ public class SplashActivity extends AppCompatActivity {
                     if(rol.equals("1")) {
 
                     }else if (rol.equals("2")){
+                        Intent intent = new Intent(SplashActivity.this, BibliotecarioActivity.class);
+                        startActivity(intent);
+                        finish();
 
                     }else if(rol.equals("3")){
-                        Intent intent = new Intent(SplashActivity.this, BibliotecarioActivity.class);
+                        Intent intent = new Intent(SplashActivity.this, UniversitarioActivity.class);
                         startActivity(intent);
                         finish();
                     }
