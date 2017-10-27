@@ -24,6 +24,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +51,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Intent intent = new Intent(MainActivity.this, login.class);
-        startActivity(intent);
+       // Intent intent = new Intent(MainActivity.this, Login.class);
+        //startActivity(intent);
     }
 
     @Override
