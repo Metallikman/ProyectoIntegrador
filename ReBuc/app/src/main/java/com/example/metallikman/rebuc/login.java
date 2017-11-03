@@ -59,6 +59,7 @@ public class Login extends AppCompatActivity {
                                 user.setEmail(rec.getString("us_correo"));
                                 user.setRol(rec.getString("us_rol"));
                                 user.setIdUser(rec.getString("us_id"));
+                                user.setNombreCompleto(rec.getString("nombreCompleto"));
                                 startActivity(intent);
                                 finish();*/
                             }else if(rol==2){
@@ -66,6 +67,7 @@ public class Login extends AppCompatActivity {
                                 user.setEmail(rec.getString("us_correo"));
                                 user.setRol(rec.getString("us_rol"));
                                 user.setIdUser(rec.getString("us_id"));
+                                user.setNombreCompleto(rec.getString("nombreCompleto"));
                                 startActivity(intent);
                                 finish();
                             }else if(rol==3) {
@@ -73,6 +75,7 @@ public class Login extends AppCompatActivity {
                                 user.setEmail(rec.getString("us_correo"));
                                 user.setRol(rec.getString("us_rol"));
                                 user.setIdUser(rec.getString("us_id"));
+                                user.setNombreCompleto(rec.getString("nombreCompleto"));
                                 startActivity(intent);
                                 finish();
                             }

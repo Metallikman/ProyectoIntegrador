@@ -25,6 +25,7 @@ public class ComentariosAdapter extends BaseAdapter {
 
     public void clear() {
         items.clear();
+        this.notifyDataSetChanged();
     }
 
     public void addAll(ArrayList<Comentarios> category) {
@@ -50,6 +51,7 @@ public class ComentariosAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
+        //clear();
         if (view == null) {
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inf.inflate(R.layout.comentarios_item, null);

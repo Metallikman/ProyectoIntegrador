@@ -23,33 +23,6 @@ public class Tickets {
         this.status=status;
     }
 
-    public void setFolio(int folio) {
-        this.folio = folio;
-    }
-
-    public void setSolicitud(String solicitud) {
-        this.solicitud = solicitud;
-    }
-
-    public void setCalificacion(String calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public void setFechaAlta(String fechaAlta) {
-        this.fechaAlta = fechaAlta;
-    }
-
-    public void setFechaCierre(String fechaCierre) {
-        this.fechaCierre = fechaCierre;
-    }
-
-    public void setSolictante(String solictante) {
-        this.solictante = solictante;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 
     public int getFolio() {
         return folio;

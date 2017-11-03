@@ -28,7 +28,8 @@
         <activity android:name=".LevantarTicketActivity" />
         <activity android:name=".DetallesReportesUniversitario" />
         <activity android:name=".BibliotecarioActivity" />
-        <activity android:name=".DetallesReportesBibliotecario"></activity>
+        <activity android:name=".DetallesReportesBibliotecario" />
+        <activity android:name=".OpcionesTicketBibliotecarioActivity" />
     </application>
 
 </manifest>

@@ -14,6 +14,17 @@ public class User {
     private String email;
     private String rol;
     private String idUser;
+    private String nombreCompleto;
+
+    public String getNombreCompleto() {
+        nombreCompleto=sharedPreferences.getString("nombre","");
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        sharedPreferences.edit().putString("nombre",nombreCompleto).commit();
+        this.nombreCompleto = nombreCompleto;
+    }
 
     public String getIdUser() {
         idUser=sharedPreferences.getString("idUser","");

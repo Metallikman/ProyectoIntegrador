@@ -32,16 +32,6 @@
                 android:onClick="iniciarLevantarTicket"
                 android:text="Generar Ticket" />
 
-            <Button
-                android:id="@+id/cmdLogout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="logout"
-                android:text="Cerrar sesion"
-                tools:layout_editor_absoluteX="148dp"
-                tools:layout_editor_absoluteY="447dp" />
-
         </LinearLayout>
 
         <ListView

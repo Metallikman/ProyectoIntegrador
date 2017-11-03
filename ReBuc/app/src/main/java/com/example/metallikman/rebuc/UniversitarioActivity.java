@@ -3,6 +3,9 @@ package com.example.metallikman.rebuc;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -25,13 +28,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UniversitarioActivity extends AppCompatActivity {
+
     private ArrayList tickets = new ArrayList<Tickets>();
     private ListView lstReportes;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_universitario);
+        user= new User(UniversitarioActivity.this);
+
+        setTitle("Bienvenido "+user.getNombreCompleto());
+
         getReportes();
         lstReportes=(ListView)findViewById(R.id.lstReportes);
         lstReportes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -52,12 +61,41 @@ public class UniversitarioActivity extends AppCompatActivity {
 
     }
 
-    public void logout(View v){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_general_universitario, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.opcionLogoutUniversitario:
+                logout();
+                return true;
+            case R.id.opcionLevantarTicketUniversitario:
+                Intent intent = new Intent(UniversitarioActivity.this, LevantarTicketActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        getReportes();
+        super.onResume();
+
+    }
+
+    public void logout(){
         new User(UniversitarioActivity.this).remove();
         Intent intent = new Intent(UniversitarioActivity.this, Login.class);
         startActivity(intent);
         finish();
-
     }
 
     public void iniciarLevantarTicket(View v){
@@ -76,25 +114,25 @@ public class UniversitarioActivity extends AppCompatActivity {
                     JSONArray jArray = new JSONArray(response);
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject rec = jArray.getJSONObject(i);
-                        String calificacion;
+                        /*String calificacion;
                         String fechaCierre;
                         if(rec.getString("calificacion")=="null"){
-                            calificacion="Sin calificar";
+                            calificacion="Sin calificación";
                         }else{
                             calificacion=rec.getString("calificacion");
                         }
                         if(rec.getString("fechaCierre")=="null"){
-                            fechaCierre="Sin fecha aun";
+                            fechaCierre="Sin fecha de cierre aún";
                         }else{
                             fechaCierre=rec.getString("fechaCierre");
-                        }
+                        }*/
                         if(rec.has("folio")){
                             tickets.add(new Tickets(
                                     rec.getInt("folio"),
                                     rec.getString("peticion"),
-                                    calificacion,
+                                    rec.getString("calificacion"),
                                     rec.getString("fechaAlta"),
-                                    fechaCierre,
+                                    rec.getString("fechaCierre"),
                                     rec.getString("nombreSolicitante")+" "+rec.getString("apellidoSolicitante"),
                                     R.drawable.st2
                             ));
@@ -117,7 +155,7 @@ public class UniversitarioActivity extends AppCompatActivity {
         }){
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
-                User user= new User(UniversitarioActivity.this);
+                //User user= new User(UniversitarioActivity.this);
                 Map<String,String > params=new HashMap<String,String>();
                 params.put("idUsuario",user.getIdUser());
                 return params;

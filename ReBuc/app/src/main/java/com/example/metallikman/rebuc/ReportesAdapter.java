@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Ubaldo Torres Juárez on 27/10/2017.
+ * Adapter for Listview in UniversitarioActivity and BibliotecarioActivity
  */
 
 public class ReportesAdapter extends BaseAdapter {
@@ -26,6 +27,7 @@ public class ReportesAdapter extends BaseAdapter {
 
     public void clear() {
         items.clear();
+        //this.notifyDataSetChanged();
     }
 
     public void addAll(ArrayList<Tickets> category) {
@@ -50,6 +52,7 @@ public class ReportesAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        //clear();
 
         if (view == null) {
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -66,7 +69,12 @@ public class ReportesAdapter extends BaseAdapter {
 
         asunto.setText(tickets.getSolicitud());
         fechaAlta.setText(tickets.getFechaAlta());
-        fechaCierre.setText(tickets.getFechaCierre());
+        if(tickets.getFechaCierre()=="null"){
+            fechaCierre.setText("Sin fecha de cierre aún");
+
+        }else{
+            fechaCierre.setText(tickets.getFechaCierre());
+        }
         txvUsuario.setText(tickets.getSolictante());
         imagen.setImageResource(tickets.getStatus());
 

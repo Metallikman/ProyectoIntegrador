@@ -2,7 +2,10 @@ package com.example.metallikman.rebuc;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,25 +33,45 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
     private TextView txvRepAsunto, txvRepFechaAlta, txvRepFechaCierre,txvRepUsuario;
     private EditText txtComentario;
     private ListView lstComentarios;
+    private Button cmdDRUComentar,cmdDRUCerrarTicket ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_reportes_universitario);
+
         lstComentarios=(ListView)findViewById(R.id.lstComentarios);
         getComentarios();
 
+        //Declaracion de botones y textviews
         txtComentario=(EditText)findViewById(R.id.txtComentario);
         txvRepAsunto=(TextView)findViewById(R.id.txvComUsuario);
         txvRepFechaAlta=(TextView)findViewById(R.id.txvComComentario);
         txvRepFechaCierre=(TextView)findViewById(R.id.txvRepFechaCierre);
         txvRepUsuario=(TextView)findViewById(R.id.txvRepUsuario);
+        cmdDRUComentar = (Button)findViewById(R.id.cmdDRUComentar);
+        cmdDRUCerrarTicket = (Button)findViewById(R.id.cmdDRUCerrarTicket);
 
+
+        if(!getIntent().getStringExtra("fechaCierre").equals("null")){
+            txtComentario.setEnabled(false);
+            cmdDRUComentar.setEnabled(false);
+            cmdDRUCerrarTicket.setEnabled(false);
+        }
         txvRepAsunto.setText(getIntent().getStringExtra("asunto"));
         txvRepFechaAlta.setText("Fecha de alta: "+getIntent().getStringExtra("fechaAlta"));
         txvRepFechaCierre.setText("Fecha de cierre: "+getIntent().getStringExtra("fechaCierre"));
         txvRepUsuario.setText("Reportado por: "+getIntent().getStringExtra("usuario"));
 
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_general_universitario, menu);
+        return true;
     }
 
     public void comentar(View v){
@@ -86,6 +109,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
 
                 params.put("comentario",comentario);
                 params.put("idUsuario",user.getIdUser());
+                params.put("rol",user.getRol());
                 params.put("idTicket",getIntent().getStringExtra("idTicket"));
 
                 return params;
@@ -141,5 +165,10 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         };
         RequestQueue rq= Volley.newRequestQueue(this);
         rq.add(sr);
+    }
+
+    public void abrirCalificar(View view){
+        CustomDialogCalificacion cdd=new CustomDialogCalificacion(DetallesReportesUniversitario.this,getIntent().getStringExtra("idTicket"));
+        cdd.show();
     }
 }
