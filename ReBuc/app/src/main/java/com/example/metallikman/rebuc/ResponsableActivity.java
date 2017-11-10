@@ -105,6 +105,10 @@ public class ResponsableActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
                 return true;
+            case R.id.opcionAgregarBiblioResponsable:
+                intent = new Intent(ResponsableActivity.this, AgregarBibliotecarioActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -150,12 +154,15 @@ public class ResponsableActivity extends AppCompatActivity {
                         }
                         if(rec.has("folio")){
                             int status=R.drawable.reports;
-                            if(rec.getString("status").equals("3")){
+                            String statusString=rec.getString("status");
+                            if(statusString.equals("3")){
                                 status=R.drawable.st3;
-                            }else if(rec.getString("status").equals("4")){
+                            }else if(statusString.equals("4")){
                                 status=R.drawable.st4;
-                            }else if(rec.getString("status").equals("6")){
+                            }else if(statusString.equals("6")){
                                 status=R.drawable.st6;
+                            }else if(statusString.equals("7")){
+                                status=R.drawable.st7;
                             }
 
                             tickets.add(new Tickets(

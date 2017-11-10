@@ -6,107 +6,102 @@
     android:layout_height="match_parent"
     tools:context="com.example.metallikman.rebuc.DetallesReportesUniversitario">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
+            <ImageView
+                android:id="@+id/imgDRUStatus"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/st3"
+                tools:layout_editor_absoluteX="142dp"
+                tools:layout_editor_absoluteY="16dp" />
 
-                <ImageView
-                    android:id="@+id/imgDRUStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/st3"
-                    tools:layout_editor_absoluteX="142dp"
-                    tools:layout_editor_absoluteY="16dp" />
-
-                <TextView
-                    android:id="@+id/txvComUsuario"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-                <TextView
-                    android:id="@+id/txvComComentario"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-
-                <TextView
-                    android:id="@+id/txvRepFechaCierre"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-
-                <TextView
-                    android:id="@+id/txvRepUsuario"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout2"
+            <TextView
+                android:id="@+id/txvComUsuario"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+            <TextView
+                android:id="@+id/txvComComentario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
-                <ListView
-                    android:id="@+id/lstComentarios"
-                    android:layout_width="match_parent"
-                    android:layout_height="173dp" />
+            <TextView
+                android:id="@+id/txvRepFechaCierre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
-                <EditText
-                    android:id="@+id/txtComentario"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Agregar comentario"
-                    android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/txvRepUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
-
-                <Button
-                    android:id="@+id/cmdDRUComentar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="comentar"
-                    android:text="Comentar" />
-
-                <Button
-                    android:id="@+id/cmdDRUCerrarTicket"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="abrirCalificar"
-                    android:text="Cerrar Ticket" />
-
-            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <ListView
+                android:id="@+id/lstComentarios"
+                android:layout_width="match_parent"
+                android:layout_height="173dp" />
+
+            <EditText
+                android:id="@+id/txtComentario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Agregar comentario"
+                android:inputType="textPersonName" />
+
+
+            <Button
+                android:id="@+id/cmdDRUComentar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="comentar"
+                android:text="Comentar" />
+
+            <Button
+                android:id="@+id/cmdDRUCerrarTicket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="abrirCalificar"
+                android:text="Cerrar Ticket" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

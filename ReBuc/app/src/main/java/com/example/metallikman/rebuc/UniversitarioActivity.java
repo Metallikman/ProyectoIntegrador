@@ -59,6 +59,7 @@ public class UniversitarioActivity extends AppCompatActivity {
                 intent.putExtra("fechaCierre", ticketAMostrar.getFechaCierre());
                 intent.putExtra("usuario", ticketAMostrar.getSolictante());
                 intent.putExtra("idTicket",String.valueOf(ticketAMostrar.getFolio()));
+                intent.putExtra("status",String.valueOf(ticketAMostrar.getStatus()));
                 startActivity(intent);
             }
         });
@@ -119,7 +120,17 @@ public class UniversitarioActivity extends AppCompatActivity {
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject rec = jArray.getJSONObject(i);
                         if(rec.has("folio")){
-
+                            int status=R.drawable.reports;
+                            String statusString=rec.getString("status");
+                            if(statusString.equals("3")){
+                                status=R.drawable.st3;
+                            }else if(statusString.equals("4")){
+                                status=R.drawable.st4;
+                            }else if(statusString.equals("6")){
+                                status=R.drawable.st6;
+                            }else if(statusString.equals("7")){
+                                status=R.drawable.st7;
+                            }
                             tickets.add(new Tickets(
                                     rec.getInt("folio"),
                                     rec.getString("peticion"),
@@ -127,7 +138,7 @@ public class UniversitarioActivity extends AppCompatActivity {
                                     rec.getString("fechaAlta"),
                                     rec.getString("fechaCierre"),
                                     rec.getString("nombreSolicitante")+" "+rec.getString("apellidoSolicitante"),
-                                    R.drawable.st3
+                                    status
                             ));
                         }else if(rec.has("error")){
                             Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();

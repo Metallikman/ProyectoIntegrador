@@ -18,4 +18,9 @@
         android:orderInCategory="100"
         android:title="@string/showUsers"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/opcionAgregarBiblioResponsable"
+        android:orderInCategory="100"
+        android:title="Agregar bibliotecario"
+        app:showAsAction="never" />
 </menu>

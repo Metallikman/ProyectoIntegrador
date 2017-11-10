@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
     private EditText txtComentario;
     private ListView lstComentarios;
     private Button cmdDRUComentar,cmdDRUCerrarTicket ;
+    private ImageView imgDRUStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         txvRepUsuario=(TextView)findViewById(R.id.txvRepUsuario);
         cmdDRUComentar = (Button)findViewById(R.id.cmdDRUComentar);
         cmdDRUCerrarTicket = (Button)findViewById(R.id.cmdDRUCerrarTicket);
+        imgDRUStatus=(ImageView)findViewById(R.id.imgDRUStatus);
 
 
         if(!getIntent().getStringExtra("fechaCierre").equals("null")){
@@ -67,9 +70,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         txvRepFechaAlta.setText("Fecha de alta: "+getIntent().getStringExtra("fechaAlta"));
         txvRepFechaCierre.setText("Fecha de cierre: "+getIntent().getStringExtra("fechaCierre"));
         txvRepUsuario.setText("Reportado por: "+getIntent().getStringExtra("usuario"));
-
-
-
+        imgDRUStatus.setImageResource(Integer.parseInt(getIntent().getStringExtra("status")));
     }
 
     @Override

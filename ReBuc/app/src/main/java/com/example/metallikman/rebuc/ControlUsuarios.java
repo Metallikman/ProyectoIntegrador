@@ -42,6 +42,7 @@ public class ControlUsuarios extends AppCompatActivity {
     private ArrayList users = new ArrayList<UserForAdapter>();
     private TextView txtCUBusqueda;
     private ListView lstCUListaUsuarios;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,9 @@ public class ControlUsuarios extends AppCompatActivity {
         setTitle("Control de usuarios");
         txtCUBusqueda=(EditText)findViewById(R.id.txtCUBusqueda);
         lstCUListaUsuarios=(ListView)findViewById(R.id.lstCUListaUsuarios);
+        user = new User(ControlUsuarios.this);
         getAllUsers();
+
 
         txtCUBusqueda.addTextChangedListener(new TextWatcher() {
 
@@ -110,11 +113,14 @@ public class ControlUsuarios extends AppCompatActivity {
                 startActivityIfNeeded(intent, 0);
                 finish();
                 return true;
+            case R.id.opcionAgregarBiblioResponsable:
+                intent = new Intent(ControlUsuarios.this, AgregarBibliotecarioActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -170,7 +176,7 @@ public class ControlUsuarios extends AppCompatActivity {
         }){
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
-                User user = new User(ControlUsuarios.this);
+
                 Map<String,String > params=new HashMap<String,String>();
                 params.put("busqueda", txtCUBusqueda.getText().toString());
                 params.put("idDependencia",user.getIdDependencia());
@@ -223,7 +229,7 @@ public class ControlUsuarios extends AppCompatActivity {
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String,String > params=new HashMap<String,String>();
-                params.put("allUsers", "true");
+                params.put("idDependencia", user.getIdDependencia());
                 return params;
             }
         };

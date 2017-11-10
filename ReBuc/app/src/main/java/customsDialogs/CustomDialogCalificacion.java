@@ -3,6 +3,7 @@ package customsDialogs;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -78,7 +79,7 @@ public class CustomDialogCalificacion extends Dialog implements android.view.Vie
         radioButton = (RadioButton) findViewById(selectedId);
 
 
-        String URL_POST="http://dogebox.ddns.net/pi/api/closeTicket.php";
+        String URL_POST=c.getResources().getString(R.string.host)+"/pi/api/closeTicket.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override

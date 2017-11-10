@@ -3,6 +3,9 @@ package com.example.metallikman.rebuc;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
@@ -39,6 +42,7 @@ public class BibliotecarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bibliotecario);
+        setTitle("Bienvenido Bibliotecario");
         lstReportes=(ListView)findViewById(R.id.lstReportesBiblio);
         swStatus = (Switch)findViewById(R.id.swUIStatus);
         getReportes();
@@ -55,9 +59,36 @@ public class BibliotecarioActivity extends AppCompatActivity {
                 intent.putExtra("fechaCierre", ticketAMostrar.getFechaCierre());
                 intent.putExtra("usuario", ticketAMostrar.getSolictante());
                 intent.putExtra("idTicket",String.valueOf(ticketAMostrar.getFolio()));
+                intent.putExtra("status",String.valueOf(ticketAMostrar.getStatus()));
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_general_bibliotecario, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.opcionLogoutBibliotecario:
+                new User(BibliotecarioActivity.this).remove();
+                intent = new Intent(BibliotecarioActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.opcionVerTicketsBibliotecario:
+                getReportes();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -85,27 +116,27 @@ public class BibliotecarioActivity extends AppCompatActivity {
                     JSONArray jArray = new JSONArray(response);
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject rec = jArray.getJSONObject(i);
-                        String calificacion;
-                        String fechaCierre;
-                        if(rec.getString("calificacion")=="null"){
-                            calificacion="Sin calificar";
-                        }else{
-                            calificacion=rec.getString("calificacion");
-                        }
-                        if(rec.getString("fechaCierre")=="null"){
-                            fechaCierre="Sin fecha aun";
-                        }else{
-                            fechaCierre=rec.getString("fechaCierre");
+
+                        int status=R.drawable.reports;
+                        String statusString=rec.getString("status");
+                        if(statusString.equals("3")){
+                            status=R.drawable.st3;
+                        }else if(statusString.equals("4")){
+                            status=R.drawable.st4;
+                        }else if(statusString.equals("6")){
+                            status=R.drawable.st6;
+                        }else if(statusString.equals("7")){
+                            status=R.drawable.st7;
                         }
                         if(rec.has("folio")){
                             tickets.add(new Tickets(
                                     rec.getInt("folio"),
                                     rec.getString("peticion"),
-                                    calificacion,
+                                    rec.getString("calificacion"),
                                     rec.getString("fechaAlta"),
-                                    fechaCierre,
+                                    rec.getString("fechaCierre"),
                                     rec.getString("nombreSolicitante")+" "+rec.getString("apellidoSolicitante"),
-                                    R.drawable.st3
+                                    status
                             ));
                         }else if(rec.has("error")){
                             Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();

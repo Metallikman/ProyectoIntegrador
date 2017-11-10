@@ -74,7 +74,6 @@ public class User {
     }
 
 
-
     public User(Context context){
         this.context=context;
         sharedPreferences=context.getSharedPreferences("userinfo",Context.MODE_PRIVATE);

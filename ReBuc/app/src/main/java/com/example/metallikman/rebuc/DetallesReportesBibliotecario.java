@@ -6,7 +6,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,8 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
     private TextView txvDRBAsunto, txvDRBFechaAlta, txvDRBFechaCierre,txvDRBUsuario;
     private EditText txtDRBComentario;
     private ListView lstDRBComentarios;
+    private ImageView imgDRBStatus;
+    private Button cmdDRBComentar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,14 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
         txvDRBFechaAlta=(TextView)findViewById(R.id.txvDRBFechaAlta);
         txvDRBFechaCierre=(TextView)findViewById(R.id.txvDRBFechaCierre);
         txvDRBUsuario=(TextView)findViewById(R.id.txvDRBUsuario);
+        imgDRBStatus=(ImageView)findViewById(R.id.imgDRBStatus);
+        cmdDRBComentar=(Button)findViewById(R.id.cmdDRBComentar);
+
+        if(!getIntent().getStringExtra("fechaCierre").equals("null")){
+            txtDRBComentario.setEnabled(false);
+            cmdDRBComentar.setEnabled(false);
+            //cmdDRUCerrarTicket.setEnabled(false);
+        }
 
         txvDRBAsunto.setText(getIntent().getStringExtra("asunto"));
         txvDRBFechaAlta.setText("Fecha de alta: "+getIntent().getStringExtra("fechaAlta"));

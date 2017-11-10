@@ -32,7 +32,8 @@
         <activity android:name=".OpcionesTicketBibliotecarioActivity" />
         <activity android:name=".ResponsableActivity" />
         <activity android:name=".ControlUsuarios" />
-        <activity android:name=".DetallesUsuarioActivity"></activity>
+        <activity android:name=".DetallesUsuarioActivity" />
+        <activity android:name=".AgregarBibliotecarioActivity"></activity>
     </application>
 
 </manifest>
