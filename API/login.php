@@ -25,7 +25,7 @@
 					}else{
 						if($email==$row['us_correo'] && $pass==$row['us_pass']){
 	   						
-	   						$sql="SELECT us_correo, us_rol, us_id FROM usuarios WHERE us_correo='".$email."'";
+	   						$sql="SELECT us_correo, us_rol, us_id, us_dependencia, concat(us_nombre,' ',us_apellido) AS nombreCompleto FROM usuarios WHERE us_correo='".$email."'";
 							$res=$conn->select($sql);
 	   						$outp = array();
 							$outp = $res->fetch_all(MYSQLI_ASSOC);

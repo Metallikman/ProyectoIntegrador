@@ -22,7 +22,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Login extends AppCompatActivity {
+import modelos.User;
+
+public class LoginActivity extends AppCompatActivity {
 
     EditText txtCorreo, txtContraseña;
 
@@ -36,18 +38,18 @@ public class Login extends AppCompatActivity {
     }
 
     public void lanzarRegistro(View v){
-        Intent intent = new Intent(Login.this, Registro.class);
+        Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
         startActivity(intent);
     }
 
     public void iniciarLogin(View v){
-        String URL_POST="http://dogebox.ddns.net/pi/api/Login.php";
+        String URL_POST=getResources().getString(R.string.host)+"/pi/api/login.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 Intent intent;
-                User user=new User(Login.this);
+                User user=new User(LoginActivity.this);
                 try {
                     JSONArray jArray = new JSONArray(response);
                     for (int i = 0; i < jArray.length(); i++) {
@@ -55,27 +57,38 @@ public class Login extends AppCompatActivity {
                         if(rec.has("us_rol")){
                             int rol = rec.getInt("us_rol");
                             if(rol==1){
-                                /*intent = new Intent(Login.this, UniversitarioActivity.class);
+                                /*intent = new Intent(LoginActivity.this, UniversitarioActivity.class);
                                 user.setEmail(rec.getString("us_correo"));
                                 user.setRol(rec.getString("us_rol"));
                                 user.setIdUser(rec.getString("us_id"));
                                 user.setNombreCompleto(rec.getString("nombreCompleto"));
+                                user.setIdDependencia(rec.getString("us_dependencia"));
                                 startActivity(intent);
                                 finish();*/
                             }else if(rol==2){
-                                 intent = new Intent(Login.this, BibliotecarioActivity.class);
+                                 intent = new Intent(LoginActivity.this, BibliotecarioActivity.class);
+                                user.setEmail(rec.getString("us_correo"));
+                                user.setRol(rec.getString("us_rol"));
+                                user.setIdUser(rec.getString("us_id"));
+                                user.setNombreCompleto(rec.getString("nombreCompleto"));
+                                user.setIdDependencia(rec.getString("us_dependencia"));
+                                startActivity(intent);
+                                finish();
+                            }else if(rol==3) {
+                                intent = new Intent(LoginActivity.this, UniversitarioActivity.class);
                                 user.setEmail(rec.getString("us_correo"));
                                 user.setRol(rec.getString("us_rol"));
                                 user.setIdUser(rec.getString("us_id"));
                                 user.setNombreCompleto(rec.getString("nombreCompleto"));
                                 startActivity(intent);
                                 finish();
-                            }else if(rol==3) {
-                                intent = new Intent(Login.this, UniversitarioActivity.class);
+                            }else if(rol==4){
+                                intent = new Intent(LoginActivity.this, ResponsableActivity.class);
                                 user.setEmail(rec.getString("us_correo"));
                                 user.setRol(rec.getString("us_rol"));
                                 user.setIdUser(rec.getString("us_id"));
                                 user.setNombreCompleto(rec.getString("nombreCompleto"));
+                                user.setIdDependencia(rec.getString("us_dependencia"));
                                 startActivity(intent);
                                 finish();
                             }

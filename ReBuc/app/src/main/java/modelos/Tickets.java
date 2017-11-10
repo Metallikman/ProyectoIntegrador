@@ -1,4 +1,4 @@
-package com.example.metallikman.rebuc;
+package modelos;
 
 /**
  * Created by Ubaldo Torres Juárez on 27/10/2017.

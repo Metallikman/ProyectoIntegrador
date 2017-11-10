@@ -1,4 +1,4 @@
-package com.example.metallikman.rebuc;
+package adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.metallikman.rebuc.R;
+import modelos.Tickets;
 
 import java.util.ArrayList;
 

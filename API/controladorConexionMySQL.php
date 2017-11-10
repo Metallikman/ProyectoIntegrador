@@ -3,8 +3,8 @@
 	class conectionSQL
 	{
 		private $server = "localhost";
-		private $username = "srs";
-		private $pass = "152421";
+		private $username = "root";
+		private $pass = "";
 		private $dbname = "rebuc";
 		private $conn = "";
 		private $error = "";

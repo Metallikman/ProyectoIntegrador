@@ -23,7 +23,7 @@
 					if(!mysqli_num_rows($res)>0){		
 						//if ($pass==$checkPass) {
 							$sql="INSERT INTO usuarios (us_nombre,us_apellido,us_correo,
-							us_pass,us_dependencia,us_status,us_rol) VALUES ('".$fname."','".$lname."','".$email."','".$pass."',1,2,3)";
+							us_pass,us_dependencia,us_status,us_rol) VALUES ('".$fname."','".$lname."','".$email."','".$pass."',1,1,3)";
 							$conn->insert($sql);
 							echo '[{"success":"Usuario registrado correctamente."}]';
 							

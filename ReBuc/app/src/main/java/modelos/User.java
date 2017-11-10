@@ -1,4 +1,4 @@
-package com.example.metallikman.rebuc;
+package modelos;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,6 +15,8 @@ public class User {
     private String rol;
     private String idUser;
     private String nombreCompleto;
+    private String idDependencia;
+
 
     public String getNombreCompleto() {
         nombreCompleto=sharedPreferences.getString("nombre","");
@@ -24,6 +26,16 @@ public class User {
     public void setNombreCompleto(String nombreCompleto) {
         sharedPreferences.edit().putString("nombre",nombreCompleto).commit();
         this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getIdDependencia() {
+        idDependencia=sharedPreferences.getString("idDependencia","");
+        return idDependencia;
+    }
+
+    public void setIdDependencia(String idDependencia) {
+        sharedPreferences.edit().putString("idDependencia",idDependencia).commit();
+        this.idDependencia = idDependencia;
     }
 
     public String getIdUser() {

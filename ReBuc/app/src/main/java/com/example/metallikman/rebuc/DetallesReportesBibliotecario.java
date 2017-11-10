@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import adapters.ComentariosAdapter;
+import modelos.Comentarios;
+import modelos.User;
+
 public class DetallesReportesBibliotecario extends AppCompatActivity {
 
     private ArrayList arComentarios = new ArrayList<Comentarios>();
@@ -79,7 +83,7 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
 
 
     public void comentar(View v){
-        String URL_POST="http://dogebox.ddns.net/pi/api/addComentario.php";
+        String URL_POST=getResources().getString(R.string.host)+"/pi/api/addComentario.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -125,12 +129,13 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
 
     public void getComentarios(){
         lstDRBComentarios.setAdapter(null);
-        String URL_POST="http://dogebox.ddns.net/pi/api/getComentarios.php";
+        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getComentarios.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 try {
+                    arComentarios.clear();
                     //Tickets tickets;
                     JSONArray jArray = new JSONArray(response);
                     for (int i = 0; i < jArray.length(); i++) {
@@ -147,6 +152,7 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
                     }
 
                     ComentariosAdapter comentariosAdapter = new ComentariosAdapter(DetallesReportesBibliotecario.this, arComentarios);
+                    comentariosAdapter.notifyDataSetChanged();
 
                     lstDRBComentarios.setAdapter(comentariosAdapter);
                 } catch (JSONException e) {

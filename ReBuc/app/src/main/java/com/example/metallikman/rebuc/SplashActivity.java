@@ -7,6 +7,8 @@ import android.os.Bundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import modelos.User;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -33,10 +35,14 @@ public class SplashActivity extends AppCompatActivity {
                         Intent intent = new Intent(SplashActivity.this, UniversitarioActivity.class);
                         startActivity(intent);
                         finish();
+                    }else if(rol.equals("4")){
+                        Intent intent = new Intent(SplashActivity.this, ResponsableActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
 
                 }else{
-                    Intent intent= new Intent(SplashActivity.this,Login.class);
+                    Intent intent= new Intent(SplashActivity.this,LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }

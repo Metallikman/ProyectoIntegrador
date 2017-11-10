@@ -27,6 +27,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import adapters.ComentariosAdapter;
+import customsDialogs.CustomDialogCalificacion;
+import modelos.Comentarios;
+import modelos.User;
+
 public class DetallesReportesUniversitario extends AppCompatActivity {
 
     private ArrayList arComentarios = new ArrayList<Comentarios>();
@@ -75,7 +80,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
     }
 
     public void comentar(View v){
-        String URL_POST="http://dogebox.ddns.net/pi/api/addComentario.php";
+        String URL_POST=getResources().getString(R.string.host)+"/pi/api/addComentario.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -85,7 +90,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject rec = jArray.getJSONObject(i);
                         if(rec.has("success")){
-                            Toast.makeText(getApplication(),rec.getString("success"),Toast.LENGTH_SHORT).show();
+                            txtComentario.setText("");
                             getComentarios();
                         }else if(rec.has("error")){
                             Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();
@@ -121,12 +126,13 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
 
     public void getComentarios(){
         lstComentarios.setAdapter(null);
-        String URL_POST="http://dogebox.ddns.net/pi/api/getComentarios.php";
+        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getComentarios.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 try {
+                    arComentarios.clear();
                     //Tickets tickets;
                     JSONArray jArray = new JSONArray(response);
                     for (int i = 0; i < jArray.length(); i++) {
@@ -143,7 +149,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
                     }
 
                     ComentariosAdapter comentariosAdapter = new ComentariosAdapter(DetallesReportesUniversitario.this, arComentarios);
-
+                    comentariosAdapter.notifyDataSetChanged();
                     lstComentarios.setAdapter(comentariosAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.example.metallikman.rebuc;
+package customsDialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.metallikman.rebuc.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

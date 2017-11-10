@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import adapters.ReportesAdapter;
+import modelos.Tickets;
+import modelos.User;
+
 public class UniversitarioActivity extends AppCompatActivity {
 
     private ArrayList tickets = new ArrayList<Tickets>();
@@ -88,12 +92,11 @@ public class UniversitarioActivity extends AppCompatActivity {
     public void onResume() {
         getReportes();
         super.onResume();
-
     }
 
     public void logout(){
         new User(UniversitarioActivity.this).remove();
-        Intent intent = new Intent(UniversitarioActivity.this, Login.class);
+        Intent intent = new Intent(UniversitarioActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
@@ -104,29 +107,19 @@ public class UniversitarioActivity extends AppCompatActivity {
     }
 
     private void getReportes(){
-        String URL_POST="http://dogebox.ddns.net/pi/api/getTickets.php";
+        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getTickets.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 try {
+                    tickets.clear();
                     //Tickets tickets;
                     JSONArray jArray = new JSONArray(response);
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject rec = jArray.getJSONObject(i);
-                        /*String calificacion;
-                        String fechaCierre;
-                        if(rec.getString("calificacion")=="null"){
-                            calificacion="Sin calificación";
-                        }else{
-                            calificacion=rec.getString("calificacion");
-                        }
-                        if(rec.getString("fechaCierre")=="null"){
-                            fechaCierre="Sin fecha de cierre aún";
-                        }else{
-                            fechaCierre=rec.getString("fechaCierre");
-                        }*/
                         if(rec.has("folio")){
+
                             tickets.add(new Tickets(
                                     rec.getInt("folio"),
                                     rec.getString("peticion"),
@@ -134,7 +127,7 @@ public class UniversitarioActivity extends AppCompatActivity {
                                     rec.getString("fechaAlta"),
                                     rec.getString("fechaCierre"),
                                     rec.getString("nombreSolicitante")+" "+rec.getString("apellidoSolicitante"),
-                                    R.drawable.st2
+                                    R.drawable.st3
                             ));
                         }else if(rec.has("error")){
                             Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();
@@ -142,6 +135,7 @@ public class UniversitarioActivity extends AppCompatActivity {
                     }
 
                     ReportesAdapter reportesAdapter = new ReportesAdapter(UniversitarioActivity.this, tickets);
+                    reportesAdapter.notifyDataSetChanged();
                     lstReportes.setAdapter(reportesAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

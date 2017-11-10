@@ -21,8 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Registro" />
-        <activity android:name=".Login" />
+        <activity android:name=".RegistroActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".UniversitarioActivity" />
         <activity android:name=".LevantarTicketActivity" />
@@ -30,6 +30,9 @@
         <activity android:name=".BibliotecarioActivity" />
         <activity android:name=".DetallesReportesBibliotecario" />
         <activity android:name=".OpcionesTicketBibliotecarioActivity" />
+        <activity android:name=".ResponsableActivity" />
+        <activity android:name=".ControlUsuarios" />
+        <activity android:name=".DetallesUsuarioActivity"></activity>
     </application>
 
 </manifest>

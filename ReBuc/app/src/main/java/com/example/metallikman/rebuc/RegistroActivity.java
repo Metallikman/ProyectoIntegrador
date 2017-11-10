@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Registro extends AppCompatActivity {
+public class RegistroActivity extends AppCompatActivity {
 
     private Context mContext;
     private EditText txtRegistroCorreo, txtRegistroContraseña, txtRegistroNombre, txtRegistroApellido;
@@ -63,7 +63,7 @@ public class Registro extends AppCompatActivity {
                         listist.add("" + rec.getString("dependencia"));
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                            Registro.this, android.R.layout.simple_spinner_item, listist);
+                            RegistroActivity.this, android.R.layout.simple_spinner_item, listist);
                     spnDependencias.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -81,7 +81,7 @@ public class Registro extends AppCompatActivity {
     }
 
     public void registrarUsuario(View v){
-        String URL_POST="http://dogebox.ddns.net/pi/api/register.php";
+        String URL_POST=getResources().getString(R.string.host)+"/pi/api/register.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -92,8 +92,9 @@ public class Registro extends AppCompatActivity {
                         JSONObject rec = jArray.getJSONObject(i);
                         if(rec.has("success")){
                             Toast.makeText(getApplication(),rec.getString("success"),Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Registro.this, Login.class);
+                            Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
                             startActivity(intent);
+                            finish();
                         }else if(rec.has("error")){
                             Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();
                         }
