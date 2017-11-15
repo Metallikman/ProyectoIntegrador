@@ -66,6 +66,9 @@ public class UniversitarioActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * crea el menu del universitario
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -73,6 +76,10 @@ public class UniversitarioActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Controla el click de los elementos del menu
+     *
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -89,12 +96,21 @@ public class UniversitarioActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Recupera los reportes del universiario
+     * cuando la actividad recupera el foco
+     *
+     */
+
     @Override
     public void onResume() {
         getReportes();
         super.onResume();
     }
 
+    /**
+     * Permite el cierre de sesion
+     */
     public void logout(){
         new User(UniversitarioActivity.this).remove();
         Intent intent = new Intent(UniversitarioActivity.this, LoginActivity.class);
@@ -102,11 +118,21 @@ public class UniversitarioActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Abre la actividad LevantarTicket
+     */
     public void iniciarLevantarTicket(View v){
         Intent intent = new Intent(UniversitarioActivity.this, LevantarTicketActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Obtiene todos los reportes
+     * <p>
+     * Obtiene todos los reportes generados por el universitario
+     * en cuestion y los muestra en un custom Listview.
+     *
+     */
     private void getReportes(){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/getTickets.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {

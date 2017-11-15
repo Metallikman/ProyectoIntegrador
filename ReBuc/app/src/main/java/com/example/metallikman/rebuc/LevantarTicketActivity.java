@@ -42,6 +42,12 @@ public class LevantarTicketActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Permite generar un ticket
+     * <p>
+     * El universitario realiza la creacion del ticket
+     *
+     */
     public void levantarTicket(View v){
 
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/levantarTicket.php";

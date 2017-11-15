@@ -6,4 +6,9 @@
         android:orderInCategory="100"
         android:title="@string/logout"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/opcionesTicketStatus"
+        android:orderInCategory="100"
+        android:title="Status del ticket"
+        app:showAsAction="never" />
 </menu>

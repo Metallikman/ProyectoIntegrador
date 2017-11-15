@@ -27,6 +27,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * Created by Ubaldo Torres Juárez on 27/10/2017.
+ *
+ * Registro activity.                           (1)
+ * <p>
+ * Formulario para poder ingresar los datos del nuevo universitario.
+ * <p>
+ */
 public class RegistroActivity extends AppCompatActivity {
 
     private Context mContext;
@@ -35,7 +44,6 @@ public class RegistroActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
 
     List<String> initialList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,13 @@ public class RegistroActivity extends AppCompatActivity {
         spnDependencias = (Spinner)findViewById(R.id.spnDependencias);
     }
 
+    /**
+     * Obtiene las dependencias.                           (1)
+     * <p>
+     * Obtiene las dependencias para introducirlas
+     * en un spinner y seleccionar la opcion deseada.
+     * <p>
+     */
     private void getDependencias() {
         String URL_POST="http://dogebox.ddns.net/pi/api/getDependencias.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
@@ -80,6 +95,14 @@ public class RegistroActivity extends AppCompatActivity {
         rq.add(sr);
     }
 
+    /**
+     * Envia los parametros para el registro del usuario(1)
+     * <p>
+     * Realiza la llamada POST a la API para poder hacer
+     * el registro de un nuevo univesitario.
+     * @param  v Es para el elemento en el layout que tiene asigando el evento onclick
+     * <p>
+     */
     public void registrarUsuario(View v){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/register.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {

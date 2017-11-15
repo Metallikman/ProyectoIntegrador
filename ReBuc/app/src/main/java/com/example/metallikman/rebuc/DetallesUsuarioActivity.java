@@ -43,6 +43,13 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Permite la modificacion de un usuario
+     * <p>
+     * Recupera los datos ingresados en los EditText y
+     * modifica en la base de datos los datos del usuario.
+     *
+     */
     public void modificarUsuario(View v){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/updateUser.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {

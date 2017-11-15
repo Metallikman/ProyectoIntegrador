@@ -65,6 +65,13 @@ public class BibliotecarioActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * <p>
+     * Crea el menu de opciones del bibliotecario definido en
+     * menus/menu_general_bibliotecario
+     *
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -72,6 +79,12 @@ public class BibliotecarioActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Seleccion de items del menu
+     * <p>
+     * responde segun al elemento clickeado en el menu de opciones
+     *
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -91,12 +104,21 @@ public class BibliotecarioActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * OnResume para actualizar los reportes
+     */
     @Override
     public void onResume() {
         super.onResume();
         getReportes();
     }
 
+    /**
+     * Cerrar sesión
+     * <p>
+     * Permnite el cierre de sesión de la aplicacion
+     *
+     */
     public void logout(View v){
         new User(BibliotecarioActivity.this).remove();
         Intent intent = new Intent(BibliotecarioActivity.this, LoginActivity.class);
@@ -104,6 +126,13 @@ public class BibliotecarioActivity extends AppCompatActivity {
         finish();
 
     }
+
+    /**
+     * Obtiene todos los reportes
+     * <p>
+     * Obtiene todos los reportes y los muestra en un custom Listview.
+     *
+     */
     private void getReportes(){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/getTickets.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {

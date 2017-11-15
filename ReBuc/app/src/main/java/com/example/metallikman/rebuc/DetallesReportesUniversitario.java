@@ -73,6 +73,13 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         imgDRUStatus.setImageResource(Integer.parseInt(getIntent().getStringExtra("status")));
     }
 
+    /**
+     * Crea el menu de opciones
+     * <p>
+     * Crea el menu de opciones para un universiario.
+     * se obtiene de res/menu/menu_general_universitario
+     *
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -80,6 +87,13 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Permite agregar un comentario a un ticket
+     * <p>
+     * Agrega un comentario agregado por el universitario
+     * segun el id del ticket.
+     *
+     */
     public void comentar(View v){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/addComentario.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
@@ -125,6 +139,13 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         rq.add(sr);
     }
 
+    /**
+     * Obtiene todos los comentarios
+     * <p>
+     * Recupera los comentarios del ticket y los
+     * muestra en un Custom ListView
+     *
+     */
     public void getComentarios(){
         lstComentarios.setAdapter(null);
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/getComentarios.php";
@@ -174,6 +195,12 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         rq.add(sr);
     }
 
+    /**
+     * Abre el customDialog de calificar.
+     * <p>
+     * El custom dialog permite cerrar y calificar el ticket.
+     *
+     */
     public void abrirCalificar(View view){
         CustomDialogCalificacion cdd=new CustomDialogCalificacion(DetallesReportesUniversitario.this,getIntent().getStringExtra("idTicket"));
         cdd.show();

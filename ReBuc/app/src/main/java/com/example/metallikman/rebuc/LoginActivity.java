@@ -37,11 +37,27 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Abre la actividad de registro
+     * <p>
+     * Abre la actividad de registro y permite añadir un
+     * nuevo universitario
+     *
+     */
     public void lanzarRegistro(View v){
         Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Permite el inicio de sesion en la aplicacion                       (1)
+     * <p>
+     * Evalua el tipo de usuario que esta ingresando y
+     * lo manda a su actividad segun su rol
+     * <p>
+     * @param  v View del elmento cuando tiene asignado el evento onclic          (3)
+     *
+     */
     public void iniciarLogin(View v){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/login.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {

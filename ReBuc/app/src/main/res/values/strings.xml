@@ -11,6 +11,6 @@
     <string name="showUsers">Administrar usuarios</string>
     <string name="title_activity_responsable">ResponsableActivity</string>
     <string name="listReports">Lista de reportes</string>
-    <string name="host">http://148.213.189.42</string>
+    <string name="host">http://192.168.1.105</string>
     <string name="title_activity_detalles_usuarios">DetallesUsuariosActivity</string>
 </resources>

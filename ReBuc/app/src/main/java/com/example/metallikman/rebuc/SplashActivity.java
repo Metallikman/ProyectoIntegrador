@@ -10,7 +10,11 @@ import java.util.TimerTask;
 import modelos.User;
 
 public class SplashActivity extends AppCompatActivity {
-
+    /**
+     * Evalua que tipo de sesion hay guardada en el smartphone
+     * e ingresa a la actividad segun el rol.
+     * Sirve como pantalla de carga.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

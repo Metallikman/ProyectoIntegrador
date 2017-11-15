@@ -84,12 +84,24 @@ public class ResponsableActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Recupera nuevamente todos los reportes
+     * cuando la actividad tiene de nuevo el foco
+     *
+     */
     @Override
     public void onResume() {
         super.onResume();
         getReportes();
     }
 
+    /**
+     * Controla los clicks del menu
+     * <p>
+     * Abre las actividades segun el elemento clickeado en
+     * el menu del responsable
+     *
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -114,13 +126,19 @@ public class ResponsableActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Crea el menu de opciones del responsable
+     *
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_general_responsable, menu);
         return true;
     }
 
+    /**
+     * Permite el cierre de sesion
+     */
     public void logout(View v){
         new User(ResponsableActivity.this).remove();
         Intent intent = new Intent(ResponsableActivity.this, LoginActivity.class);
@@ -128,6 +146,13 @@ public class ResponsableActivity extends AppCompatActivity {
         finish();
 
     }
+
+    /**
+     * Obtiene todos los reportes
+     * <p>
+     * Obtiene todos los reportes y los muestra en un custom Listview.
+     *
+     */
     private void getReportes(){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/getTickets.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
@@ -204,6 +229,13 @@ public class ResponsableActivity extends AppCompatActivity {
         rq.add(sr);
     }
 
+    /**
+     * Obtiene los reportes buscados
+     * <p>
+     * Obtiene todos los reportes segun el campo de busqueda
+     * y los muestra en un custom Listview.
+     *
+     */
     private void getReportesBusqueda(){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/getTickets.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {

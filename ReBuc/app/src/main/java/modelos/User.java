@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by Ubaldo Torres Juárez on 26/10/2017.
+ * Created by Ubaldo Torres Juárez on 27/10/2017.
+ * @since 1.0
+ * @version 1.0
+ *
+ * Permite el control de sesiones del usuario
  */
 
 public class User {

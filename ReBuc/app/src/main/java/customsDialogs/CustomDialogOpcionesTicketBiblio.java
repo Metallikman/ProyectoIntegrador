@@ -3,7 +3,6 @@ package customsDialogs;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -28,14 +27,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Ubaldo Torres Juárez on 30/10/2017.
- * @version     1.0
- * @since       1.0
- * Permite la creacion de un custom dialog para cerrar y calificar el ticket
+ * Created by Ubaldo Torres Juárez on 12/11/2017.
  */
 
-public class CustomDialogCalificacion extends Dialog implements android.view.View.OnClickListener{
-
+public class CustomDialogOpcionesTicketBiblio extends Dialog implements View.OnClickListener {
     private Activity c;
     private Dialog d;
     private Button yes;
@@ -43,27 +38,32 @@ public class CustomDialogCalificacion extends Dialog implements android.view.Vie
     private RadioButton radioButton;
     private String idTicket;
 
+
     /**
      * Constructor del customDialog mostrado en {@link com.example.metallikman.rebuc.DetallesUsuarioActivity}
      * <p>
      *  @param context Recibe el contexto de la actividad
      *                 donde se llama el customDialog.
-     *  @param idTicket Recibe el id del ticket a cerrar y calificar.
+     *  @param idTicket Recibe el id del ticket a cambiar el status.
      *
      */
-    public CustomDialogCalificacion(Activity context, String idTicket) {
+    public CustomDialogOpcionesTicketBiblio(Activity context, String idTicket) {
         super(context);
         // TODO Auto-generated constructor stub
         this.c = context;
         this.idTicket=idTicket;
     }
 
+    /**
+     * Constructor del customDialog mostrado en {@link com.example.metallikman.rebuc.DetallesReportesBibliotecario}
+     * <p>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_calificacion);
-        yes = (Button) findViewById(R.id.cmdDCcalificar);
+        setContentView(R.layout.dialog_opciones_ticket_bibliotecario);
         yes = (Button) findViewById(R.id.cmdDCcalificar);
         radioGroup = (RadioGroup) findViewById(R.id.rdgDCCalificacion);
         yes.setOnClickListener(this);
@@ -71,14 +71,17 @@ public class CustomDialogCalificacion extends Dialog implements android.view.Vie
     }
 
     /**
-     * Controla el click del boton de cerrar y calificar
-     *
+     * Controla el click del boton de modificar el status
      */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.cmdDCcalificar:
-                doCalificationUpdate();
+            case R.id.rdbOTBEnProceso:
+                doStatusUpdate(1);
+                c.finish();
+                break;
+            case R.id.rdbOTBCerrado:
+                doStatusUpdate(2);
                 c.finish();
                 break;
             default:
@@ -88,10 +91,11 @@ public class CustomDialogCalificacion extends Dialog implements android.view.Vie
     }
 
     /**
-     * Hace la llamada a la API para cerrar y calificar el ticket.
+     * Hace la llamada a la API para modificar el status
+     * @param status Recibe '1' para activo o '2' para Cerrado.
      *
      */
-    private void doCalificationUpdate(){
+    private void doStatusUpdate(final int status){
 
         int selectedId = radioGroup.getCheckedRadioButtonId();
         radioButton = (RadioButton) findViewById(selectedId);
@@ -129,12 +133,11 @@ public class CustomDialogCalificacion extends Dialog implements android.view.Vie
 
                 Map<String,String > params=new HashMap<String,String>();
                 params.put("idTicket",idTicket);
-                params.put("calificacion",radioButton.getText().toString());
+                params.put("status",String.valueOf(status));
                 return params;
             }
         };
         RequestQueue rq= Volley.newRequestQueue(c);
         rq.add(sr);
     }
-
 }

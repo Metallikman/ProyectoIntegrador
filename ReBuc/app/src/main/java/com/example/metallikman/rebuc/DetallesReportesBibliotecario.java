@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import adapters.ComentariosAdapter;
+import customsDialogs.CustomDialogOpcionesTicketBiblio;
 import modelos.Comentarios;
 import modelos.User;
 
@@ -71,6 +72,13 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
 
     }
 
+    /**
+     * Crea el menu de opciones del bibliotecario
+     * <p>
+     * Crea el menu de opciones del bibliotecario definido en
+     * menus/opciones_ticket_bibliotecario
+     *
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -85,15 +93,22 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
             case R.id.opcionesTicketBibliotecario:
                 Toast.makeText(getApplicationContext(),"Si funciona el click del menú",Toast.LENGTH_LONG).show();
                 return true;
-            /*case R.id.help:
-                showHelp();
-                return true;*/
+            case R.id.opcionesTicketStatus:
+                CustomDialogOpcionesTicketBiblio cdot=new CustomDialogOpcionesTicketBiblio(DetallesReportesBibliotecario.this,getIntent().getStringExtra("idTicket"));
+                cdot.show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-
+    /**
+     * Agrega comentarios a un ticket                          (1)
+     * <p>
+     * Agrega un comentario realizado por el bibliotecario hacia
+     * un determinado ticket
+     *
+     */
     public void comentar(View v){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/addComentario.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
@@ -139,6 +154,13 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
         rq.add(sr);
     }
 
+    /**
+     * Obtiene los comentarios de un ticket                          (1)
+     * <p>
+     * Obitiene todos los comentarios de un ticket y los añade
+     * a una listview personalizable.
+     *
+     */
     public void getComentarios(){
         lstDRBComentarios.setAdapter(null);
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/getComentarios.php";

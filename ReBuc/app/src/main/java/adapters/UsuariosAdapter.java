@@ -37,7 +37,11 @@ import modelos.User;
 import modelos.UserForAdapter;
 
 /**
- * Created by Ubaldo Torres Juárez on 06/11/2017.
+ * Created by Ubaldo Torres Juárez on 27/10/2017.
+ * @since 1.0
+ * @version 1.0
+ *
+ * Usado para llenar el listView de usuarios de un responsable o administrador.
  */
 
 public class UsuariosAdapter extends BaseAdapter {

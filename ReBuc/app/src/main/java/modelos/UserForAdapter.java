@@ -4,7 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by Ubaldo Torres Juárez on 06/11/2017.
+ * Created by Ubaldo Torres Juárez on 27/10/2017.
+ * @since 1.0
+ * @version 1.0
+ *
+ * Utilizada para el adapter de usuarios para luego mostarlos
+ * en un ListView y mostarlos al responsable o administrador segun sea el caso.
  */
 
 public class UserForAdapter {

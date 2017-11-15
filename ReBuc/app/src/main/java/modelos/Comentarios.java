@@ -2,6 +2,11 @@ package modelos;
 
 /**
  * Created by Ubaldo Torres Juárez on 27/10/2017.
+ * @since 1.0
+ * @version 1.0
+ *
+ * Utilizada para el adapter de comentarios para luego añadir los comentarios
+ * en un ListView y mostrarlos al usuario
  */
 
 public class Comentarios {

@@ -90,7 +90,12 @@ public class ControlUsuarios extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Seleccion de items del menu
+     * <p>
+     * responde segun al elemento clickeado en el menu de opciones
+     *
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -122,18 +127,36 @@ public class ControlUsuarios extends AppCompatActivity {
         }
     }
 
+    /**
+     * Seleccion de items del menu
+     * <p>
+     * responde segun al elemento clickeado en el menu de opciones
+     *
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_general_responsable, menu);
         return true;
     }
 
+    /**
+     * Seleccion de items del menu
+     * <p>
+     * responde segun al elemento clickeado en el menu de opciones
+     *
+     */
     @Override
     public void onResume() {
         super.onResume();
         getAllUsers();
     }
 
+    /**
+     * Obtiene los usuarios según el EditText de busqueda
+     * <p>
+     * Obtiene todos los usuarios de cierta dependencia.
+     *
+     */
     private void getUsuariosBusqueda(){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/getUsers.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
@@ -186,6 +209,13 @@ public class ControlUsuarios extends AppCompatActivity {
         RequestQueue rq= Volley.newRequestQueue(this);
         rq.add(sr);
     }
+
+    /**
+     * Recupera de todos los usuarios
+     * <p>
+     * Recupera de todos los usuarios segun su id de dependencia
+     *
+     */
 
     private void getAllUsers(){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/getUsers.php";

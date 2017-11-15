@@ -24,6 +24,7 @@ import java.util.Map;
 import adapters.ReportesAdapter;
 import modelos.Tickets;
 
+
 public class AgregarBibliotecarioActivity extends AppCompatActivity {
 
     private EditText txtABNombre,txtABApellido,txtABCorreo,txtABPass;
@@ -39,6 +40,12 @@ public class AgregarBibliotecarioActivity extends AppCompatActivity {
         txtABPass=(EditText)findViewById(R.id.txtABPass);
     }
 
+    /**
+     * AgregaBibliotecario como responsable
+     * <p>
+     * Permite la creacion de bibliotecarios tomados de los EditText de la vista.
+     *
+     */
     public void agregarBibliotecario(View v){
         String URL_POST=getResources().getString(R.string.host)+"/pi/api/addBibliotecario.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {

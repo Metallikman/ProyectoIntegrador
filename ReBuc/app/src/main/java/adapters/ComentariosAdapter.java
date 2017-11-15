@@ -15,11 +15,16 @@ import java.util.ArrayList;
 
 /**
  * Created by Ubaldo Torres Juárez on 27/10/2017.
+ * @since 1.0
+ * @version 1.0
+ *
+ * Usado para llenar el listView de comentarios de un ticket
  */
 
 public class ComentariosAdapter extends BaseAdapter {
     protected Activity activity;
     protected ArrayList<Comentarios> items;
+
 
     public ComentariosAdapter(Activity activity, ArrayList<Comentarios> items) {
         this.activity = activity;
