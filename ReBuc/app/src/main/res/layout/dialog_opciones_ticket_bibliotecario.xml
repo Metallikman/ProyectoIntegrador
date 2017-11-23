@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
+        android:id="@+id/rdgOTBGrupo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -47,5 +48,17 @@
             android:layout_weight="1"
             android:text="Cerrado" />
     </RadioGroup>
+
+    <Button
+        android:id="@+id/cmdOTBModificr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rdgOTBGrupo" />
 
 </android.support.constraint.ConstraintLayout>

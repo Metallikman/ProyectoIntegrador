@@ -89,7 +89,7 @@ public class UsuariosAdapter extends BaseAdapter {
             view = inf.inflate(R.layout.usuarios_item, null);
         }
 
-        UserForAdapter users = items.get(i);
+        final UserForAdapter users = items.get(i);
 
         TextView nombreCompleto = (TextView) view.findViewById(R.id.txvUINombre);
         TextView correo = (TextView) view.findViewById(R.id.txvUICorreo);
@@ -98,49 +98,7 @@ public class UsuariosAdapter extends BaseAdapter {
 
         swUIStatus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String URL_POST=activity.getResources().getString(R.string.host)+"/pi/api/updateStatusUser.php";
-                StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONArray jArray = new JSONArray(response);
-                            for (int i = 0; i < jArray.length(); i++) {
-                                JSONObject rec = jArray.getJSONObject(i);
-                                if(rec.has("success")){
-
-                                }else if(rec.has("error")){
-                                    Toast.makeText(activity,rec.getString("error"),Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-                    @Override
-                    protected Map<String,String> getParams() throws AuthFailureError {
-                        User user = new User(activity);
-                        Map<String,String > params=new HashMap<String,String>();
-                        String status;
-                        if(swUIStatus.isChecked()){
-                            status="1";
-                        }else {
-                            status="2";
-                        }
-                        params.put("status",status);
-                        params.put("idUsuario",user.getIdUser());
-
-                        return params;
-                    }
-                };
-                RequestQueue rq= Volley.newRequestQueue(activity);
-                rq.add(sr);
+                updateStatus(swUIStatus,users.getIdUsuario());
             }
         });
 
@@ -155,5 +113,51 @@ public class UsuariosAdapter extends BaseAdapter {
         }
 
         return view;
+    }
+
+    private void updateStatus(final Switch s, final int idUsuario){
+        String URL_POST=activity.getResources().getString(R.string.host)+"/pi/api/updateStatusUser.php";
+        StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jArray = new JSONArray(response);
+                    for (int i = 0; i < jArray.length(); i++) {
+                        JSONObject rec = jArray.getJSONObject(i);
+                        if(rec.has("success")){
+
+                        }else if(rec.has("error")){
+                            Toast.makeText(activity,rec.getString("error"),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                //User user = new User(activity);
+                Map<String,String > params=new HashMap<String,String>();
+                String status;
+                if(s.isChecked()){
+                    status="1";
+                }else {
+                    status="2";
+                }
+                params.put("status",status);
+                params.put("idUsuario",String.valueOf(idUsuario));
+
+                return params;
+            }
+        };
+        RequestQueue rq= Volley.newRequestQueue(activity);
+        rq.add(sr);
     }
 }

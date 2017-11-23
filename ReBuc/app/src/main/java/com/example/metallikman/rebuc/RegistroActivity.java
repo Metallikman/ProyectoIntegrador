@@ -65,7 +65,7 @@ public class RegistroActivity extends AppCompatActivity {
      * <p>
      */
     private void getDependencias() {
-        String URL_POST="http://dogebox.ddns.net/pi/api/getDependencias.php";
+        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getDependencias.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override

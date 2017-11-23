@@ -60,6 +60,7 @@ public class BibliotecarioActivity extends AppCompatActivity {
                 intent.putExtra("usuario", ticketAMostrar.getSolictante());
                 intent.putExtra("idTicket",String.valueOf(ticketAMostrar.getFolio()));
                 intent.putExtra("status",String.valueOf(ticketAMostrar.getStatus()));
+                intent.putExtra("status",String.valueOf(ticketAMostrar.getStatus()));
                 startActivity(intent);
             }
         });

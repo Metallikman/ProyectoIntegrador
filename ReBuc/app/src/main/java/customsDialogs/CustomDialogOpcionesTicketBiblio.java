@@ -64,8 +64,8 @@ public class CustomDialogOpcionesTicketBiblio extends Dialog implements View.OnC
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_opciones_ticket_bibliotecario);
-        yes = (Button) findViewById(R.id.cmdDCcalificar);
-        radioGroup = (RadioGroup) findViewById(R.id.rdgDCCalificacion);
+        yes = (Button) findViewById(R.id.cmdOTBModificr);
+        radioGroup = (RadioGroup) findViewById(R.id.rdgOTBGrupo);
         yes.setOnClickListener(this);
 
     }
@@ -76,6 +76,21 @@ public class CustomDialogOpcionesTicketBiblio extends Dialog implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.cmdOTBModificr:
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                radioButton = (RadioButton) findViewById(selectedId);
+                if(radioButton.getText().toString().equals("En proceso")){
+                    doStatusUpdate(4);
+                }else{
+                    doStatusUpdate(6);
+                }
+
+                c.finish();
+                break;
+            default:
+                break;
+        }
+        /*switch (v.getId()) {
             case R.id.rdbOTBEnProceso:
                 doStatusUpdate(1);
                 c.finish();
@@ -86,7 +101,7 @@ public class CustomDialogOpcionesTicketBiblio extends Dialog implements View.OnC
                 break;
             default:
                 break;
-        }
+        }*/
         dismiss();
     }
 
@@ -97,11 +112,11 @@ public class CustomDialogOpcionesTicketBiblio extends Dialog implements View.OnC
      */
     private void doStatusUpdate(final int status){
 
-        int selectedId = radioGroup.getCheckedRadioButtonId();
-        radioButton = (RadioButton) findViewById(selectedId);
+        //int selectedId = radioGroup.getCheckedRadioButtonId();
+        //radioButton = (RadioButton) findViewById(selectedId);
 
 
-        String URL_POST=c.getResources().getString(R.string.host)+"/pi/api/closeTicket.php";
+        String URL_POST=c.getResources().getString(R.string.host)+"/pi/api/updateStatusTicket.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override

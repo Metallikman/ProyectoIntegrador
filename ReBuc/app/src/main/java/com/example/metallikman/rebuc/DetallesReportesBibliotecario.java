@@ -69,6 +69,7 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
         txvDRBFechaAlta.setText("Fecha de alta: "+getIntent().getStringExtra("fechaAlta"));
         txvDRBFechaCierre.setText("Fecha de cierre: "+getIntent().getStringExtra("fechaCierre"));
         txvDRBUsuario.setText("Reportado por: "+getIntent().getStringExtra("usuario"));
+        imgDRBStatus.setImageResource(Integer.parseInt(getIntent().getStringExtra("status")));
 
     }
 
