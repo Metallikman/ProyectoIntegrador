@@ -3,8 +3,7 @@
 	include ("controladorConexionMySQL.php");
 	//header('Content-Type: text/html; charset=UTF-8');
 	
-	if($_POST){
-
+	if($_SERVER['REQUEST_METHOD']=="POST"){
 		$conn=new conectionSQL();
 		$conn->startConection();
 
@@ -23,7 +22,7 @@
 					if(!mysqli_num_rows($res)>0){		
 						//if ($pass==$checkPass) {
 							$sql="INSERT INTO usuarios (us_nombre,us_apellido,us_correo,
-							us_pass,us_dependencia,us_status,us_rol) VALUES ('".$fname."','".$lname."','".$email."','".$pass."',1,1,3)";
+							us_pass,us_dependencia,us_status,us_rol) VALUES ('$fname','$lname','$email','$pass',$dependencia,1,3)";
 							$conn->insert($sql);
 							echo '[{"success":"Usuario registrado correctamente."}]';
 							

@@ -64,6 +64,9 @@ public class ResponsableActivity extends AppCompatActivity {
                 intent.putExtra("fechaCierre", ticketAMostrar.getFechaCierre());
                 intent.putExtra("usuario", ticketAMostrar.getSolictante());
                 intent.putExtra("idTicket",String.valueOf(ticketAMostrar.getFolio()));
+                intent.putExtra("status",String.valueOf(ticketAMostrar.getStatus()));
+                intent.putExtra("bibliotecario",ticketAMostrar.getBibliotecario());
+                intent.putExtra("isResponsable",true);
                 startActivity(intent);
 
             }
@@ -154,7 +157,7 @@ public class ResponsableActivity extends AppCompatActivity {
      *
      */
     private void getReportes(){
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getTickets.php";
+        String URL_POST=getResources().getString(R.string.host)+"getTickets.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -167,16 +170,21 @@ public class ResponsableActivity extends AppCompatActivity {
                         JSONObject rec = jArray.getJSONObject(i);
                         String calificacion;
                         String fechaCierre;
+                        String nombreBibliotecario;
                         if(rec.getString("calificacion")=="null"){
                             calificacion="Sin calificar";
                         }else{
                             calificacion=rec.getString("calificacion");
                         }
                         if(rec.getString("fechaCierre")=="null"){
-                            fechaCierre="Sin fecha aun";
+                            fechaCierre="Sin fecha de cierre aún";
                         }else{
                             fechaCierre=rec.getString("fechaCierre");
                         }
+                        if (rec.getString("nombreBibliotecario")=="null")
+                            nombreBibliotecario="Sin bibliotecario asignado";
+                        else
+                            nombreBibliotecario=rec.getString("nombreBibliotecario")+" "+rec.getString("apellidoBibliotecario");
                         if(rec.has("folio")){
                             int status=R.drawable.reports;
                             String statusString=rec.getString("status");
@@ -197,7 +205,8 @@ public class ResponsableActivity extends AppCompatActivity {
                                     rec.getString("fechaAlta"),
                                     fechaCierre,
                                     rec.getString("nombreSolicitante")+" "+rec.getString("apellidoSolicitante"),
-                                    status
+                                    status,
+                                    nombreBibliotecario
                             ));
                         }else if(rec.has("error")){
                             Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();
@@ -219,9 +228,9 @@ public class ResponsableActivity extends AppCompatActivity {
         }){
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
-
+                User usr= new User(ResponsableActivity.this);
                 Map<String,String > params=new HashMap<String,String>();
-                params.put("getAllReports","true");
+                params.put("idDependencia",usr.getIdDependencia());
                 return params;
             }
         };
@@ -237,7 +246,7 @@ public class ResponsableActivity extends AppCompatActivity {
      *
      */
     private void getReportesBusqueda(){
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getTickets.php";
+        String URL_POST=getResources().getString(R.string.host)+"getTickets.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -250,16 +259,21 @@ public class ResponsableActivity extends AppCompatActivity {
                         JSONObject rec = jArray.getJSONObject(i);
                         String calificacion;
                         String fechaCierre;
+                        String nombreBibliotecario;
                         if(rec.getString("calificacion")=="null"){
                             calificacion="Sin calificar";
                         }else{
                             calificacion=rec.getString("calificacion");
                         }
                         if(rec.getString("fechaCierre")=="null"){
-                            fechaCierre="Sin fecha aun";
+                            fechaCierre="Sin fecha de cierre aún";
                         }else{
                             fechaCierre=rec.getString("fechaCierre");
                         }
+                        if (rec.getString("nombreBibliotecario")=="null")
+                            nombreBibliotecario="Sin bibliotecario asignado";
+                        else
+                            nombreBibliotecario=rec.getString("nombreBibliotecario")+" "+rec.getString("apellidoBibliotecario");
                         if(rec.has("folio")){
                             int status=R.drawable.reports;
                             if(rec.getString("status").equals("3")){
@@ -276,7 +290,8 @@ public class ResponsableActivity extends AppCompatActivity {
                                     rec.getString("fechaAlta"),
                                     fechaCierre,
                                     rec.getString("nombreSolicitante")+" "+rec.getString("apellidoSolicitante"),
-                                    status
+                                    status,
+                                    nombreBibliotecario
                             ));
                         }else if(rec.has("error")){
                             Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();
@@ -299,7 +314,9 @@ public class ResponsableActivity extends AppCompatActivity {
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
 
+                User usr= new User(ResponsableActivity.this);
                 Map<String,String > params=new HashMap<String,String>();
+                params.put("idDependencia",usr.getIdDependencia());
                 params.put("busqueda",txtRespBusquedaTicket.getText().toString());
                 return params;
             }

@@ -29,7 +29,9 @@ public class SplashActivity extends AppCompatActivity {
                 if(user.getEmail()!=""){
                     String rol=user.getRol();
                     if(rol.equals("1")) {
-
+                        Intent intent = new Intent(SplashActivity.this, AdminActivity.class);
+                        startActivity(intent);
+                        finish();
                     }else if (rol.equals("2")){
                         Intent intent = new Intent(SplashActivity.this, BibliotecarioActivity.class);
                         startActivity(intent);

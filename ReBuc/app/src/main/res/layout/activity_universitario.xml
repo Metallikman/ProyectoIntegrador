@@ -19,20 +19,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/txtAUBuscarTicket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:ems="10"
+            android:hint="Busqueda de Tickets por Asunto"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="false"
+            android:singleLine="false" />
 
-            <Button
-                android:id="@+id/cmdAgregarReporte"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="iniciarLevantarTicket"
-                android:text="Generar Ticket" />
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/reports" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:text="@string/listReports" />
 
         <ListView
             android:id="@+id/lstReportes"

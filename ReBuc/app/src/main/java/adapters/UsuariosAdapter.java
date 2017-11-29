@@ -93,7 +93,8 @@ public class UsuariosAdapter extends BaseAdapter {
 
         TextView nombreCompleto = (TextView) view.findViewById(R.id.txvUINombre);
         TextView correo = (TextView) view.findViewById(R.id.txvUICorreo);
-        TextView dependencia = (TextView) view.findViewById(R.id.txvUIDependecia);
+        TextView rol = (TextView) view.findViewById(R.id.txvUIRol);
+        TextView dependencia = (TextView) view.findViewById(R.id.txvUIDependencia);
         final Switch swUIStatus = (Switch) view.findViewById(R.id.swUIStatus);
 
         swUIStatus.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +106,7 @@ public class UsuariosAdapter extends BaseAdapter {
 
         nombreCompleto.setText(users.getNombreCompleto());
         correo.setText(users.getEmail());
+        rol.setText(users.getRol());
         dependencia.setText(users.getDependencia());
         if(users.getStatus().equals("1")){
             swUIStatus.setChecked(true);
@@ -116,7 +118,7 @@ public class UsuariosAdapter extends BaseAdapter {
     }
 
     private void updateStatus(final Switch s, final int idUsuario){
-        String URL_POST=activity.getResources().getString(R.string.host)+"/pi/api/updateStatusUser.php";
+        String URL_POST=activity.getResources().getString(R.string.host)+"updateStatusUser.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override

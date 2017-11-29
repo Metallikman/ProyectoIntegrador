@@ -2,7 +2,7 @@
 	header("Content-Type: application/json;charset=utf-8");
 	include ("controladorConexionMySQL.php");
 	
-	if($_POST){
+	if($_SERVER['REQUEST_METHOD']=="POST"){
 
 		date_default_timezone_set('America/Mexico_City');
 		$timedate=date('Y-m-d H:i:s');
@@ -14,7 +14,7 @@
 			$idTicket=$_POST['idTicket'];
 			$calificacion=$_POST['calificacion'];
 
-			$sql="UPDATE rebuc.tickets SET ti_status=6 , ti_calificacion=".$calificacion." , ti_fechaCierre='".$timedate."' WHERE ti_folio=".$idTicket;
+			$sql="UPDATE id3295737_rebuc.tickets SET ti_status=6 , ti_calificacion=".$calificacion." , ti_fechaCierre='".$timedate."' WHERE ti_folio=".$idTicket;
 			$conn->update($sql);
 
 			echo '[{"success":"Ticket cerrado correctamente."}]';

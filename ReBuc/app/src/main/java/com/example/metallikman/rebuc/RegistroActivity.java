@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import utilidades.StringWithTags;
+
 
 /**
  * Created by Ubaldo Torres Juárez on 27/10/2017.
@@ -65,21 +67,24 @@ public class RegistroActivity extends AppCompatActivity {
      * <p>
      */
     private void getDependencias() {
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getDependencias.php";
+        String URL_POST=getResources().getString(R.string.host)+"getDependencias.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 try {
-                    List<String> listist = new ArrayList<String>();
+                    List<StringWithTags> dependencias = new ArrayList<StringWithTags>();
                     JSONArray jArray = new JSONArray(response);
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject rec = jArray.getJSONObject(i);
-                        listist.add("" + rec.getString("dependencia"));
+                        //dependencias.add("" + rec.getString("dependencia"));
+                        dependencias.add(new StringWithTags(rec.getString("dependencia"), rec.getString("de_id")));
+
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                            RegistroActivity.this, android.R.layout.simple_spinner_item, listist);
-                    spnDependencias.setAdapter(adapter);
+
+                    ArrayAdapter<StringWithTags> adap = new ArrayAdapter<StringWithTags> (RegistroActivity.this, android.R.layout.simple_spinner_item, dependencias);
+
+                    spnDependencias.setAdapter(adap);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -104,7 +109,7 @@ public class RegistroActivity extends AppCompatActivity {
      * <p>
      */
     public void registrarUsuario(View v){
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/register.php";
+        String URL_POST=getResources().getString(R.string.host)+"register.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -139,7 +144,8 @@ public class RegistroActivity extends AppCompatActivity {
                 String pass=txtRegistroContraseña.getText().toString();
                 String fname=txtRegistroNombre.getText().toString();
                 String lname=txtRegistroApellido.getText().toString();
-                String dependencia = spnDependencias.getSelectedItem().toString();
+                StringWithTags s = (StringWithTags) spnDependencias.getItemAtPosition(spnDependencias.getSelectedItemPosition());
+                String dependencia = s.tag.toString();
 
                 params.put("email",email);
                 params.put("pass",pass);
@@ -153,4 +159,5 @@ public class RegistroActivity extends AppCompatActivity {
         RequestQueue rq= Volley.newRequestQueue(this);
         rq.add(sr);
     }
+
 }

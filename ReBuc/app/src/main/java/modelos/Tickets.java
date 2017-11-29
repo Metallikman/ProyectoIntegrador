@@ -17,8 +17,9 @@ public class Tickets {
     private String fechaCierre;
     private String solictante;
     private int status;
+    private String bibliotecario;
 
-    public Tickets(int folio, String solicitud, String calificacion, String fechaAlta,String fechaCierre, String solictante, int status){
+    public Tickets(int folio, String solicitud, String calificacion, String fechaAlta,String fechaCierre, String solictante, int status, String bibliotecario){
         this.folio=folio;
         this.solicitud=solicitud;
         this.calificacion=calificacion;
@@ -26,6 +27,7 @@ public class Tickets {
         this.fechaCierre=fechaCierre;
         this.solictante=solictante;
         this.status=status;
+        this.bibliotecario=bibliotecario;
     }
 
 
@@ -57,4 +59,7 @@ public class Tickets {
         return status;
     }
 
+    public String getBibliotecario() {
+        return bibliotecario;
+    }
 }

@@ -4,11 +4,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,11 +38,12 @@ import modelos.User;
 public class DetallesReportesUniversitario extends AppCompatActivity {
 
     private ArrayList arComentarios = new ArrayList<Comentarios>();
-    private TextView txvRepAsunto, txvRepFechaAlta, txvRepFechaCierre,txvRepUsuario;
+    private TextView txvRepAsunto, txvRepFechaAlta, txvRepFechaCierre,txvRepUsuario,txvDRUBibliotecario;
     private EditText txtComentario;
     private ListView lstComentarios;
     private Button cmdDRUComentar,cmdDRUCerrarTicket ;
     private ImageView imgDRUStatus;
+    private ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         getComentarios();
 
         //Declaracion de botones y textviews
+        txvDRUBibliotecario=(TextView)findViewById(R.id.txvDRUBibliotecario);
         txtComentario=(EditText)findViewById(R.id.txtComentario);
         txvRepAsunto=(TextView)findViewById(R.id.txvComUsuario);
         txvRepFechaAlta=(TextView)findViewById(R.id.txvComComentario);
@@ -59,6 +63,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         cmdDRUComentar = (Button)findViewById(R.id.cmdDRUComentar);
         cmdDRUCerrarTicket = (Button)findViewById(R.id.cmdDRUCerrarTicket);
         imgDRUStatus=(ImageView)findViewById(R.id.imgDRUStatus);
+        scrollView=(ScrollView)findViewById(R.id.scrollDRU);
 
 
         if(!getIntent().getStringExtra("fechaCierre").equals("null")){
@@ -71,6 +76,27 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         txvRepFechaCierre.setText("Fecha de cierre: "+getIntent().getStringExtra("fechaCierre"));
         txvRepUsuario.setText("Reportado por: "+getIntent().getStringExtra("usuario"));
         imgDRUStatus.setImageResource(Integer.parseInt(getIntent().getStringExtra("status")));
+        txvDRUBibliotecario.setText(getIntent().getStringExtra("bibliotecario"));
+
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                lstComentarios.getParent().requestDisallowInterceptTouchEvent(false);
+
+                return false;
+            }
+        });
+
+        lstComentarios.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of
+                // child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
     }
 
     /**
@@ -95,7 +121,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
      *
      */
     public void comentar(View v){
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/addComentario.php";
+        String URL_POST=getResources().getString(R.string.host)+"addComentario.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -148,7 +174,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
      */
     public void getComentarios(){
         lstComentarios.setAdapter(null);
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getComentarios.php";
+        String URL_POST=getResources().getString(R.string.host)+"getComentarios.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override

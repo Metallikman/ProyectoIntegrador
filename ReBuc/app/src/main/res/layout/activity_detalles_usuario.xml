@@ -59,24 +59,24 @@
             android:inputType="textEmailAddress" />
 
         <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dependencia" />
-
-        <Spinner
-            android:id="@+id/spnDUDependencias"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
             android:id="@+id/spnDURol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Rol" />
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/spnDUDRol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txvDUDependencia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dependencia" />
+
+        <Spinner
+            android:id="@+id/spnDUDependencia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -86,5 +86,6 @@
             android:layout_height="wrap_content"
             android:onClick="modificarUsuario"
             android:text="Modificar Usuario" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

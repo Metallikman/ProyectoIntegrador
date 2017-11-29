@@ -1,15 +1,19 @@
 package com.example.metallikman.rebuc;
 
+import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,18 +35,21 @@ import java.util.Map;
 
 import adapters.ComentariosAdapter;
 import customsDialogs.CustomDialogOpcionesTicketBiblio;
+import customsDialogs.CustomDialogReasignarTicket;
 import modelos.Comentarios;
 import modelos.User;
 
 public class DetallesReportesBibliotecario extends AppCompatActivity {
 
     private ArrayList arComentarios = new ArrayList<Comentarios>();
-    private TextView txvDRBAsunto, txvDRBFechaAlta, txvDRBFechaCierre,txvDRBUsuario;
+    private TextView txvDRBAsunto, txvDRBFechaAlta, txvDRBFechaCierre,txvDRBUsuario, txvDRBBibliotecario;
     private EditText txtDRBComentario;
     private ListView lstDRBComentarios;
     private ImageView imgDRBStatus;
-    private Button cmdDRBComentar;
+    private Button cmdDRBComentar, cmdDRBTomarTicket;
+    private ScrollView scrollView;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,25 +59,52 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
         getComentarios();
 
         txtDRBComentario=(EditText)findViewById(R.id.txtDRBComentario);
+        txvDRBBibliotecario=(TextView) findViewById(R.id.txvDRBBibliotecario);
         txvDRBAsunto=(TextView)findViewById(R.id.txvDRBAsunto);
         txvDRBFechaAlta=(TextView)findViewById(R.id.txvDRBFechaAlta);
         txvDRBFechaCierre=(TextView)findViewById(R.id.txvDRBFechaCierre);
         txvDRBUsuario=(TextView)findViewById(R.id.txvDRBUsuario);
         imgDRBStatus=(ImageView)findViewById(R.id.imgDRBStatus);
         cmdDRBComentar=(Button)findViewById(R.id.cmdDRBComentar);
+        cmdDRBTomarTicket=(Button)findViewById(R.id.cmdDRBTomarTicket);
+        scrollView=(ScrollView)findViewById(R.id.scrollDRB);
+        String fechaCierre=getIntent().getStringExtra("fechaCierre");
 
-        if(!getIntent().getStringExtra("fechaCierre").equals("null")){
+        if(!fechaCierre.equals("Sin fecha de cierre aún")){
             txtDRBComentario.setEnabled(false);
             cmdDRBComentar.setEnabled(false);
-            //cmdDRUCerrarTicket.setEnabled(false);
         }
 
         txvDRBAsunto.setText(getIntent().getStringExtra("asunto"));
         txvDRBFechaAlta.setText("Fecha de alta: "+getIntent().getStringExtra("fechaAlta"));
-        txvDRBFechaCierre.setText("Fecha de cierre: "+getIntent().getStringExtra("fechaCierre"));
+        txvDRBFechaCierre.setText("Fecha de cierre: "+fechaCierre);
+        txvDRBUsuario.setText("Reportado por: "+getIntent().getStringExtra("usuario"));
         txvDRBUsuario.setText("Reportado por: "+getIntent().getStringExtra("usuario"));
         imgDRBStatus.setImageResource(Integer.parseInt(getIntent().getStringExtra("status")));
+        txvDRBBibliotecario.setText(getIntent().getStringExtra("bibliotecario"));
 
+        if(!getIntent().getStringExtra("bibliotecario").equals("Sin bibliotecario asignado"))
+            cmdDRBTomarTicket.setEnabled(false);
+
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                lstDRBComentarios.getParent().requestDisallowInterceptTouchEvent(false);
+
+                return false;
+            }
+        });
+
+        lstDRBComentarios.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of
+                // child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
     }
 
     /**
@@ -83,7 +117,10 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.opciones_ticket_bibliotecario, menu);
+        if(getIntent().getBooleanExtra("isResponsable",false))
+            inflater.inflate(R.menu.opciones_ticket_responsable, menu);
+        else
+            inflater.inflate(R.menu.opciones_ticket_bibliotecario, menu);
         return true;
     }
 
@@ -98,6 +135,10 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
                 CustomDialogOpcionesTicketBiblio cdot=new CustomDialogOpcionesTicketBiblio(DetallesReportesBibliotecario.this,getIntent().getStringExtra("idTicket"));
                 cdot.show();
                 return true;
+            case R.id.opcionesTicketReasignar:
+                CustomDialogReasignarTicket cdrt=new CustomDialogReasignarTicket(DetallesReportesBibliotecario.this,getIntent().getStringExtra("idTicket"));
+                cdrt.show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -111,7 +152,7 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
      *
      */
     public void comentar(View v){
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/addComentario.php";
+        String URL_POST=getResources().getString(R.string.host)+"addComentario.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -164,7 +205,7 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
      */
     public void getComentarios(){
         lstDRBComentarios.setAdapter(null);
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getComentarios.php";
+        String URL_POST=getResources().getString(R.string.host)+"getComentarios.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -211,4 +252,46 @@ public class DetallesReportesBibliotecario extends AppCompatActivity {
         RequestQueue rq= Volley.newRequestQueue(this);
         rq.add(sr);
     }
+
+    public void setBibliotecario(View v){
+        String URL_POST=getResources().getString(R.string.host)+"takeTicket.php";
+        StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+
+                    JSONArray jArray = new JSONArray(response);
+                    for (int i = 0; i < jArray.length(); i++) {
+                        JSONObject rec = jArray.getJSONObject(i);
+                        if(rec.has("success")){
+                            Toast.makeText(getApplication(),rec.getString("success"),Toast.LENGTH_SHORT).show();
+                            finish();
+                        }else if(rec.has("error")){
+                            Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplication(),error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                User usr=new User (DetallesReportesBibliotecario.this);
+                Map<String,String > params=new HashMap<String,String>();
+                params.put("idTicket",getIntent().getStringExtra("idTicket"));
+                params.put("idUser",usr.getIdUser());
+                return params;
+            }
+        };
+        RequestQueue rq= Volley.newRequestQueue(this);
+        rq.add(sr);
+    }
+
 }

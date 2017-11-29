@@ -2,14 +2,14 @@
 	header("Content-Type: application/json;charset=utf-8");
 	include ("controladorConexionMySQL.php");
 	
-	if($_POST){
+	if($_SERVER['REQUEST_METHOD']=="POST"){
 
 		$conn=new conectionSQL();
 		$conn->startConection();
 		
 		if(isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['correo']) && isset($_POST['pass']) && isset($_POST['dependencia'])){
 			if (filter_var($_POST['correo'], FILTER_VALIDATE_EMAIL)&&strpos($_POST['correo'],"@ucol.mx")) {
-				$sql="INSERT INTO rebuc.usuarios (us_nombre, us_apellido, us_correo, us_pass, us_dependencia, us_rol, us_status) VALUES ('".$_POST['nombre']."','".$_POST['apellido']."','".$_POST['correo']."','".$_POST['pass']."',".$_POST['dependencia'].",2,1)";
+				$sql="INSERT INTO id3295737_rebuc.usuarios (us_nombre, us_apellido, us_correo, us_pass, us_dependencia, us_rol, us_status) VALUES ('".$_POST['nombre']."','".$_POST['apellido']."','".$_POST['correo']."','".$_POST['pass']."',".$_POST['dependencia'].",2,1)";
 				$conn->insert($sql);
 				echo '[{"success":"Usuario agregado."}]';
 			}else{

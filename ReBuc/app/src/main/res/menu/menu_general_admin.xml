@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/opcionLogoutAdmin"
+        android:orderInCategory="100"
+        android:title="@string/logout"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/opcionEstadisticasAdmin"
+        android:orderInCategory="100"
+        android:title="Ver estadísticas"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/opcionControlUsrAdmin"
+        android:orderInCategory="100"
+        android:title="@string/showUsers"
+        app:showAsAction="never" />
+
+
+</menu>

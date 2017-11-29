@@ -23,6 +23,7 @@ import java.util.Map;
 
 import adapters.ReportesAdapter;
 import modelos.Tickets;
+import modelos.User;
 
 
 public class AgregarBibliotecarioActivity extends AppCompatActivity {
@@ -47,7 +48,7 @@ public class AgregarBibliotecarioActivity extends AppCompatActivity {
      *
      */
     public void agregarBibliotecario(View v){
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/addBibliotecario.php";
+        String URL_POST=getResources().getString(R.string.host)+"addBibliotecario.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -76,13 +77,13 @@ public class AgregarBibliotecarioActivity extends AppCompatActivity {
         }){
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
-
+                User usr=new User(AgregarBibliotecarioActivity.this);
                 Map<String,String > params=new HashMap<String,String>();
                 params.put("nombre", txtABNombre.getText().toString());
                 params.put("apellido", txtABApellido.getText().toString());
                 params.put("correo", txtABCorreo.getText().toString());
                 params.put("pass", txtABPass.getText().toString());
-                params.put("dependencia","1");
+                params.put("dependencia",usr.getIdDependencia());
                 return params;
             }
         };

@@ -60,6 +60,7 @@ public class UniversitarioActivity extends AppCompatActivity {
                 intent.putExtra("usuario", ticketAMostrar.getSolictante());
                 intent.putExtra("idTicket",String.valueOf(ticketAMostrar.getFolio()));
                 intent.putExtra("status",String.valueOf(ticketAMostrar.getStatus()));
+                intent.putExtra("bibliotecario",ticketAMostrar.getBibliotecario());
                 startActivity(intent);
             }
         });
@@ -134,7 +135,7 @@ public class UniversitarioActivity extends AppCompatActivity {
      *
      */
     private void getReportes(){
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getTickets.php";
+        String URL_POST=getResources().getString(R.string.host)+"getTickets.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -164,7 +165,8 @@ public class UniversitarioActivity extends AppCompatActivity {
                                     rec.getString("fechaAlta"),
                                     rec.getString("fechaCierre"),
                                     rec.getString("nombreSolicitante")+" "+rec.getString("apellidoSolicitante"),
-                                    status
+                                    status,
+                                    rec.getString("nombreBibliotecario")+" "+rec.getString("apellidoBibliotecario")
                             ));
                         }else if(rec.has("error")){
                             Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();

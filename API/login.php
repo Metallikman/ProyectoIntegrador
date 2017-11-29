@@ -1,11 +1,11 @@
 <?php
 	header("Content-Type: application/json;charset=utf-8");
-	include ("controladorConexionMySql.php");
+	include ("controladorConexionMySQL.php");
 
 	$conn=new conectionSQL();
 	$conn->startConection();
 
-	if($_POST){
+	if($_SERVER['REQUEST_METHOD']=="POST"){
 		$email=$_POST['email'];
 		$pass=$_POST['pass'];
 

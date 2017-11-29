@@ -45,9 +45,15 @@
                 android:text="TextView" />
 
             <TextView
-                android:id="@+id/txvUIDependecia"
+                android:id="@+id/txvUIRol"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/txvUIDependencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="TextView" />
 
             <Switch

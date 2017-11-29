@@ -28,11 +28,13 @@ import modelos.User;
 public class LevantarTicketActivity extends AppCompatActivity {
 
     private EditText txtSolicitud;
+    private EditText txtDetallesTicket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_levantar_ticket);
         txtSolicitud = (EditText)findViewById(R.id.txtSolicitud);
+        txtDetallesTicket=(EditText)findViewById(R.id.txtDetallesTicket);
     }
 
     @Override
@@ -50,7 +52,7 @@ public class LevantarTicketActivity extends AppCompatActivity {
      */
     public void levantarTicket(View v){
 
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/levantarTicket.php";
+        String URL_POST=getResources().getString(R.string.host)+"levantarTicket.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -83,9 +85,11 @@ public class LevantarTicketActivity extends AppCompatActivity {
                 Map<String,String > params=new HashMap<String,String>();
                 String solicitud=txtSolicitud.getText().toString();
                 String idUsuario= user.getIdUser();
+                String detalles= txtDetallesTicket.getText().toString();
 
                 params.put("solicitud",solicitud);
                 params.put("idUsuario",idUsuario);
+                params.put("detalles",detalles);
 
                 return params;
             }

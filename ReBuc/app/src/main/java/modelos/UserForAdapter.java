@@ -16,6 +16,7 @@ public class UserForAdapter {
 
 
     private String email;
+    private String idRol;
     private String rol;
     private String nombre;
     private String apellido;
@@ -24,9 +25,10 @@ public class UserForAdapter {
     private String idStatus;
     private int idUsuario;
 
-    public UserForAdapter(String email, String rol, String nombre,String apellido, String idDependencia, String dependencia, String idStatus, int idUsuario) {
+    public UserForAdapter(String email, String idRol,String rol, String nombre,String apellido, String idDependencia, String dependencia, String idStatus, int idUsuario) {
         this.email = email;
-        this.rol = rol;
+        this.idRol = idRol;
+        this.rol=rol;
         this.nombre = nombre;
         this.apellido = apellido;
         this.idDependencia = idDependencia;
@@ -65,7 +67,11 @@ public class UserForAdapter {
         return idDependencia;
     }
 
-    public String getRol() {
+    public String getIdRol() {
+        return idRol;
+    }
+
+    public String getRol(){
         return rol;
     }
 

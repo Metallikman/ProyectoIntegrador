@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
      *
      */
     public void iniciarLogin(View v){
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/login.php";
+        String URL_POST=getResources().getString(R.string.host)+"login.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -73,14 +73,14 @@ public class LoginActivity extends AppCompatActivity {
                         if(rec.has("us_rol")){
                             int rol = rec.getInt("us_rol");
                             if(rol==1){
-                                /*intent = new Intent(LoginActivity.this, UniversitarioActivity.class);
+                                intent = new Intent(LoginActivity.this, AdminActivity.class);
                                 user.setEmail(rec.getString("us_correo"));
                                 user.setRol(rec.getString("us_rol"));
                                 user.setIdUser(rec.getString("us_id"));
                                 user.setNombreCompleto(rec.getString("nombreCompleto"));
                                 user.setIdDependencia(rec.getString("us_dependencia"));
                                 startActivity(intent);
-                                finish();*/
+                                finish();
                             }else if(rol==2){
                                  intent = new Intent(LoginActivity.this, BibliotecarioActivity.class);
                                 user.setEmail(rec.getString("us_correo"));

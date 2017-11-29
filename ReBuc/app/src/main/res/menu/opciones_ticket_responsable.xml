@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/opcionesTicketResponsable"
+        android:orderInCategory="100"
+        android:title="@string/logout"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/opcionesTicketStatus"
+        android:orderInCategory="100"
+        android:title="Status del ticket"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/opcionesTicketReasignar"
+        android:orderInCategory="100"
+        android:title="Reasignar ticket"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/opcionesTicketTransferir"
+        android:orderInCategory="100"
+        android:title="Transferir ticket"
+        app:showAsAction="never" />
+</menu>

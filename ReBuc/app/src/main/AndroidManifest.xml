@@ -33,7 +33,9 @@
         <activity android:name=".ResponsableActivity" />
         <activity android:name=".ControlUsuarios" />
         <activity android:name=".DetallesUsuarioActivity" />
-        <activity android:name=".AgregarBibliotecarioActivity"></activity>
+        <activity android:name=".AgregarBibliotecarioActivity" />
+        <activity android:name=".AdminActivity" />
+        <activity android:name=".EstadisticasActivity"></activity>
     </application>
 
 </manifest>

@@ -68,6 +68,7 @@ public class ReportesAdapter extends BaseAdapter {
         TextView fechaAlta = (TextView) view.findViewById(R.id.txvComComentario);
         TextView fechaCierre = (TextView) view.findViewById(R.id.txvFechaCierre);
         TextView txvUsuario = (TextView) view.findViewById(R.id.txvUsuario);
+        TextView txvbibliotecario = (TextView) view.findViewById(R.id.txvbibliotecario);
         ImageView imagen = (ImageView) view.findViewById(R.id.imgRepStatus);
 
         asunto.setText(tickets.getSolicitud());
@@ -80,6 +81,10 @@ public class ReportesAdapter extends BaseAdapter {
         }
         txvUsuario.setText(tickets.getSolictante());
         imagen.setImageResource(tickets.getStatus());
+        if (tickets.getBibliotecario()==("null"))
+            txvbibliotecario.setText("Sin bibliotecario asignado");
+        else
+            txvbibliotecario.setText(tickets.getBibliotecario());
 
         return view;
     }

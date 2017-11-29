@@ -97,7 +97,7 @@ public class CustomDialogCalificacion extends Dialog implements android.view.Vie
         radioButton = (RadioButton) findViewById(selectedId);
 
 
-        String URL_POST=c.getResources().getString(R.string.host)+"/pi/api/closeTicket.php";
+        String URL_POST=c.getResources().getString(R.string.host)+"closeTicket.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override

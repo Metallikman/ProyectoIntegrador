@@ -7,12 +7,14 @@
 		$conn=new conectionSQL();
 		$conn->startConection();
 
-		if(isset($_POST['status']) && isset($_POST['idUsuario'])){
-			$sql="UPDATE id3295737_rebuc.usuarios SET us_status=".$_POST['status']." WHERE us_id=".$_POST['idUsuario'];
+		if(isset($_POST['idTicket']) && isset($_POST['status'])){
+			$idTicket=$_POST['idTicket'];
+			$status=$_POST['status'];
+			$sql="UPDATE id3295737_rebuc.ticket SET ti_status=$status WHERE ti_folio=$idTicket";
 			$conn->update($sql);
 			echo '[{"success":"Status cambiado."}]';
 		}else{
-			echo '[{"error":"No ha ingresado el status."}]';
+			echo '[{"error":"No ha ingresado los datos."}]';
 		}
 					
 	}

@@ -10,8 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import adapters.ReportesAdapter;
@@ -36,6 +39,7 @@ import adapters.UsuariosAdapter;
 import modelos.Tickets;
 import modelos.User;
 import modelos.UserForAdapter;
+import utilidades.StringWithTags;
 
 public class ControlUsuarios extends AppCompatActivity {
 
@@ -43,6 +47,8 @@ public class ControlUsuarios extends AppCompatActivity {
     private TextView txtCUBusqueda;
     private ListView lstCUListaUsuarios;
     private User user;
+    boolean isAdmin=false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +58,10 @@ public class ControlUsuarios extends AppCompatActivity {
         setTitle("Control de usuarios");
         txtCUBusqueda=(EditText)findViewById(R.id.txtCUBusqueda);
         lstCUListaUsuarios=(ListView)findViewById(R.id.lstCUListaUsuarios);
+
         user = new User(ControlUsuarios.this);
         getAllUsers();
-
+        isAdmin=getIntent().getBooleanExtra("admin",false);
 
         txtCUBusqueda.addTextChangedListener(new TextWatcher() {
 
@@ -79,12 +86,14 @@ public class ControlUsuarios extends AppCompatActivity {
 
                 Intent intent = new Intent(getBaseContext(), DetallesUsuarioActivity.class);
                 intent.putExtra("dependencia", usuarioAMostar.getDependencia());
+                intent.putExtra("idDependencia",usuarioAMostar.getIdDependencia());
                 intent.putExtra("email", usuarioAMostar.getEmail());
                 intent.putExtra("nombre", usuarioAMostar.getNombre());
                 intent.putExtra("apellido", usuarioAMostar.getApellido());
                 intent.putExtra("status", usuarioAMostar.getStatus());
                 intent.putExtra("rol",usuarioAMostar.getRol());
                 intent.putExtra("idUsuario",String.valueOf(usuarioAMostar.getIdUsuario()));
+                intent.putExtra("isAdmin",true);
                 startActivity(intent);
             }
         });
@@ -122,6 +131,23 @@ public class ControlUsuarios extends AppCompatActivity {
                 intent = new Intent(ControlUsuarios.this, AgregarBibliotecarioActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.opcionLogoutAdmin:
+                new User(ControlUsuarios.this).remove();
+                intent = new Intent(ControlUsuarios.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.opcionControlUsrAdmin:
+                getAllUsers();
+                return true;
+            case R.id.opcionEstadisticasAdmin:
+                /*intent = new Intent(AdminActivity.this, EstadisticasActiviy.class);
+                startActivity(intent);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivityIfNeeded(intent, 0);*/
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -135,7 +161,10 @@ public class ControlUsuarios extends AppCompatActivity {
      */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_general_responsable, menu);
+        if(isAdmin)
+            inflater.inflate(R.menu.menu_general_admin, menu);
+        else
+            inflater.inflate(R.menu.menu_general_responsable, menu);
         return true;
     }
 
@@ -158,7 +187,7 @@ public class ControlUsuarios extends AppCompatActivity {
      *
      */
     private void getUsuariosBusqueda(){
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getUsers.php";
+        String URL_POST=getResources().getString(R.string.host)+"getUsers.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -172,6 +201,7 @@ public class ControlUsuarios extends AppCompatActivity {
                             users.add(new UserForAdapter(
                                     rec.getString("correo"),
                                     rec.getString("rol"),
+                                    rec.getString("nombreRol"),
                                     rec.getString("nombre"),
                                     rec.getString("apellido"),
                                     rec.getString("idDependencia"),
@@ -218,7 +248,7 @@ public class ControlUsuarios extends AppCompatActivity {
      */
 
     private void getAllUsers(){
-        String URL_POST=getResources().getString(R.string.host)+"/pi/api/getUsers.php";
+        String URL_POST=getResources().getString(R.string.host)+"getUsers.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
@@ -232,6 +262,7 @@ public class ControlUsuarios extends AppCompatActivity {
                             users.add(new UserForAdapter(
                                     rec.getString("correo"),
                                     rec.getString("rol"),
+                                    rec.getString("nombreRol"),
                                     rec.getString("nombre"),
                                     rec.getString("apellido"),
                                     rec.getString("idDependencia"),
@@ -260,10 +291,14 @@ public class ControlUsuarios extends AppCompatActivity {
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String,String > params=new HashMap<String,String>();
                 params.put("idDependencia", user.getIdDependencia());
+                if(isAdmin)
+                    params.put("admin","true");
                 return params;
             }
         };
         RequestQueue rq= Volley.newRequestQueue(this);
         rq.add(sr);
     }
+
+
 }
