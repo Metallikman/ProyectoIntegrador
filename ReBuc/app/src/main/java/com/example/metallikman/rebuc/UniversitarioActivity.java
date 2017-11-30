@@ -147,6 +147,7 @@ public class UniversitarioActivity extends AppCompatActivity {
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject rec = jArray.getJSONObject(i);
                         if(rec.has("folio")){
+                            String fechaCierre,nombreBibliotecario;
                             int status=R.drawable.reports;
                             String statusString=rec.getString("status");
                             if(statusString.equals("3")){
@@ -158,15 +159,23 @@ public class UniversitarioActivity extends AppCompatActivity {
                             }else if(statusString.equals("7")){
                                 status=R.drawable.st7;
                             }
+                            if(rec.getString("fechaCierre")=="null")
+                                fechaCierre="Sin fecha de cierre aún";
+                            else
+                                fechaCierre=rec.getString("fechaCierre");
+                            if (rec.getString("nombreBibliotecario")=="null")
+                                nombreBibliotecario="Sin bibliotecario asignado";
+                            else
+                                nombreBibliotecario=rec.getString("nombreBibliotecario")+" "+rec.getString("apellidoBibliotecario");
                             tickets.add(new Tickets(
                                     rec.getInt("folio"),
                                     rec.getString("peticion"),
                                     rec.getString("calificacion"),
                                     rec.getString("fechaAlta"),
-                                    rec.getString("fechaCierre"),
+                                    fechaCierre,
                                     rec.getString("nombreSolicitante")+" "+rec.getString("apellidoSolicitante"),
                                     status,
-                                    rec.getString("nombreBibliotecario")+" "+rec.getString("apellidoBibliotecario")
+                                    nombreBibliotecario
                             ));
                         }else if(rec.has("error")){
                             Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();

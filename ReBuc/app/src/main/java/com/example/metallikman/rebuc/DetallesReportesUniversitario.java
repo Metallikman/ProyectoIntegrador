@@ -66,7 +66,7 @@ public class DetallesReportesUniversitario extends AppCompatActivity {
         scrollView=(ScrollView)findViewById(R.id.scrollDRU);
 
 
-        if(!getIntent().getStringExtra("fechaCierre").equals("null")){
+        if(!getIntent().getStringExtra("fechaCierre").equals("Sin fecha de cierre aún")){
             txtComentario.setEnabled(false);
             cmdDRUComentar.setEnabled(false);
             cmdDRUCerrarTicket.setEnabled(false);
