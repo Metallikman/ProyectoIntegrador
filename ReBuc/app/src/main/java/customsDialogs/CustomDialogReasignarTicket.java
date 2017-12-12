@@ -160,6 +160,10 @@ public class CustomDialogReasignarTicket extends Dialog implements View.OnClickL
         rq.add(sr);
     }
 
+    /**
+     * Obitene la lista de usuarios bibliotecarios para poder seleccionar
+     * el bibliotecario encargado de un ticket.
+     */
     private void getUsers(){
 
         String URL_POST=c.getResources().getString(R.string.host)+"getUsers.php";

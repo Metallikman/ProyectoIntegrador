@@ -48,17 +48,19 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
         setTitle("Bienvenido Administrador");
 
-        lstAdminTickets=(ListView)findViewById(R.id.lstAdminTickets);
-        txtAdminBuscarTicket=(EditText)findViewById(R.id.txtAdminBuscarTicket);
+        lstAdminTickets = (ListView) findViewById(R.id.lstAdminTickets);
+        txtAdminBuscarTicket = (EditText) findViewById(R.id.txtAdminBuscarTicket);
         getReportes();
 
         txtAdminBuscarTicket.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -67,12 +69,23 @@ public class AdminActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Usado al momento de iniciar el activity y carga el menú de opciones para el administrador
+     * @param menu
+     * @return
+     */
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_general_admin, menu);
         return true;
     }
 
+    /**
+     * Es llamado al dar click en algun elemento del menu
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -89,7 +102,7 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(intent);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("admin",true);
+                intent.putExtra("admin", true);
                 startActivityIfNeeded(intent, 0);
 
                 return true;
@@ -106,17 +119,23 @@ public class AdminActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Llamado cuando la actividad recupera el foco
+     */
     @Override
     public void onResume() {
         super.onResume();
         getReportes();
     }
 
-    private void getReportes(){
+    /**
+     *  Obtiene de la API la lista de reportes
+     */
+    private void getReportes() {
 
-        String URL_POST=getResources().getString(R.string.host)+"getTickets.php";
+        String URL_POST = getResources().getString(R.string.host) + "getTickets.php";
 
-        StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -129,28 +148,28 @@ public class AdminActivity extends AppCompatActivity {
                         String calificacion;
                         String fechaCierre;
                         String nombreBibliotecario;
-                        if(rec.getString("calificacion")=="null"){
-                            calificacion="Sin calificar";
-                        }else{
-                            calificacion=rec.getString("calificacion");
+                        if (rec.getString("calificacion") == "null") {
+                            calificacion = "Sin calificar";
+                        } else {
+                            calificacion = rec.getString("calificacion");
                         }
-                        if(rec.getString("fechaCierre")=="null"){
-                            fechaCierre="Sin fecha de cierre aún";
-                        }else{
-                            fechaCierre=rec.getString("fechaCierre");
+                        if (rec.getString("fechaCierre") == "null") {
+                            fechaCierre = "Sin fecha de cierre aún";
+                        } else {
+                            fechaCierre = rec.getString("fechaCierre");
                         }
-                        if (rec.getString("nombreBibliotecario")=="null")
-                            nombreBibliotecario="Sin bibliotecario asignado";
+                        if (rec.getString("nombreBibliotecario") == "null")
+                            nombreBibliotecario = "Sin bibliotecario asignado";
                         else
-                            nombreBibliotecario=rec.getString("nombreBibliotecario")+" "+rec.getString("apellidoBibliotecario");
-                        if(rec.has("folio")){
-                            int status=R.drawable.reports;
-                            if(rec.getString("status").equals("3")){
-                                status=R.drawable.st3;
-                            }else if(rec.getString("status").equals("4")){
-                                status=R.drawable.st4;
-                            }else if(rec.getString("status").equals("6")){
-                                status=R.drawable.st6;
+                            nombreBibliotecario = rec.getString("nombreBibliotecario") + " " + rec.getString("apellidoBibliotecario");
+                        if (rec.has("folio")) {
+                            int status = R.drawable.reports;
+                            if (rec.getString("status").equals("3")) {
+                                status = R.drawable.st3;
+                            } else if (rec.getString("status").equals("4")) {
+                                status = R.drawable.st4;
+                            } else if (rec.getString("status").equals("6")) {
+                                status = R.drawable.st6;
                             }
                             tickets.add(new Tickets(
                                     rec.getInt("folio"),
@@ -158,12 +177,12 @@ public class AdminActivity extends AppCompatActivity {
                                     calificacion,
                                     rec.getString("fechaAlta"),
                                     fechaCierre,
-                                    rec.getString("nombreSolicitante")+" "+rec.getString("apellidoSolicitante"),
+                                    rec.getString("nombreSolicitante") + " " + rec.getString("apellidoSolicitante"),
                                     status,
                                     nombreBibliotecario
                             ));
-                        }else if(rec.has("error")){
-                            Toast.makeText(getApplication(),rec.getString("error"),Toast.LENGTH_SHORT).show();
+                        } else if (rec.has("error")) {
+                            Toast.makeText(getApplication(), rec.getString("error"), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -177,21 +196,25 @@ public class AdminActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplication(),error.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(), error.toString(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
-            protected Map<String,String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() throws AuthFailureError {
 
-                Map<String,String > params=new HashMap<String,String>();
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("getAllReports", "true");
                 return params;
             }
         };
-        RequestQueue rq= Volley.newRequestQueue(this);
+        RequestQueue rq = Volley.newRequestQueue(this);
         rq.add(sr);
     }
 
+
+    /**
+     * Obtiene de la API la lista de reportes segun el asunto por el que se busca
+     */
     private void getReportesBusqueda(){
         String URL_POST=getResources().getString(R.string.host)+"getTickets.php";
         StringRequest sr=new StringRequest(Request.Method.POST, URL_POST, new Response.Listener<String>() {

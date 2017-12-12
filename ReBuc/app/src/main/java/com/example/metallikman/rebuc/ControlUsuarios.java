@@ -61,6 +61,7 @@ public class ControlUsuarios extends AppCompatActivity {
 
         user = new User(ControlUsuarios.this);
         getAllUsers();
+        //usado para ver si es admin o no.
         isAdmin=getIntent().getBooleanExtra("admin",false);
 
         txtCUBusqueda.addTextChangedListener(new TextWatcher() {

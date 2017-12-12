@@ -25,11 +25,16 @@ public class ComentariosAdapter extends BaseAdapter {
     protected Activity activity;
     protected ArrayList<Comentarios> items;
 
-
+    /**
+     *
+     * @param activity Obtiene la actividad en donde se llama el adapter
+     * @param items Lista de objetos comentarios que se mostraran
+     */
     public ComentariosAdapter(Activity activity, ArrayList<Comentarios> items) {
         this.activity = activity;
         this.items = items;
     }
+
 
     public void clear() {
         items.clear();
